@@ -34,13 +34,44 @@ var secureMiddleware = function(req,res,next){
   }
 }
 
-
+/**
+ * Verify that http server is available by visiting this
+ * in a browser:
+ * @example http://localhost:3000/
+ */
 app.get('/', function (req, res) {
   res.send('Working!')
 })
 
 /**
- * Returns session token used for authenticating against routes
+ * @apiDefine Authorization
+ *
+ * @apiHeader {String} authorization Bearer token
+ * @apiHeaderExample {json} Bearer Token Example:
+ *   {
+ *     "Authorization": "Bearer JSQLM"
+ *   }
+ *
+ * @apiError NotAuthorized Invalid/missing bearer token
+ *
+ * @apiErrorExample AuthorizationError
+ *     HTTP/1.1 401 Not Found
+ *     Not Authorized
+ */
+
+/**
+ * @api {get} /api/token Get auth token
+ * @apiName GetToken
+ * @apiGroup Authentication
+ *
+ * @apiSuccess {String} token Bearer token
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "token":"LEHAF"
+ *   }
+ *
  */
 app.get('/api/token',function(req,res){
   res.send({
@@ -49,7 +80,19 @@ app.get('/api/token',function(req,res){
 })
 
 /**
- * Returns all triplogs from DB
+ * @api {get} /api/triplogs Get all triplogs
+ * @apiName GetTriplogs
+ * @apiGroup Triplogs
+ *
+ * @apiSuccess {Array} Array of Triplog objects
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "token":"LEHAF"
+ *   }
+ *
+ * @apiUse Authorization
  */
 app.get('/api/triplogs',secureMiddleware,function(req,res){
   TriplogModel.find({},function(err,triplogs){
@@ -61,7 +104,52 @@ app.get('/api/triplogs',secureMiddleware,function(req,res){
 })
 
 /**
- * Create/save a new triplog
+ * @api {post} /api/triplogs Create a triplog
+ * @apiName CreateTriplog
+ * @apiGroup Triplogs
+ *
+ * @apiSuccess {Triplog} Created triplog
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *   {
+ *     "token":"LEHAF"
+ *   }
+ *
+ * @apiError ValidationError Any problems found when validating triplog object
+ *
+ * @apiErrorExample ValidationError
+ *   HTTP/1.1 400
+ *   {
+ *     "errors": {
+ *       "segments.0.mode": {
+ *         "message": "`biksssse` is not a valid enum value for path `mode`.",
+ *         "name": "ValidatorError",
+ *         "properties": {
+ *           "enumValues": [
+ *             "bike",
+ *             "carpool",
+ *             "drive",
+ *             "transit",
+ *             "vanpool",
+ *             "walk",
+ *             "telework"
+ *           ],
+ *           "type": "enum",
+ *           "message": "`{VALUE}` is not a valid enum value for path `{PATH}`.",
+ *           "path": "mode",
+ *           "value": "biksssse"
+ *         },
+ *         "kind": "enum",
+ *         "path": "segments.0.mode",
+ *         "value": "biksssse"
+ *       }
+ *     },
+ *     "message": "Validation failed",
+ *     "name": "ValidationError"
+ *   }
+
+ * @apiUse Authorization
  */
 app.post('/api/triplogs',secureMiddleware,function(req,res){
   var Triplog = new TriplogModel(req.body);
@@ -74,7 +162,49 @@ app.post('/api/triplogs',secureMiddleware,function(req,res){
 })
 
 /**
- * Update an existing triplog
+ * @api {put} /api/triplogs/:id Update an existing Triplog
+ * @apiName UpdateTriplog
+ * @apiGroup Triplogs
+ *
+ * @apiParam {ObjectId} id Object ID Triplog
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 204 OK
+ *
+ * @apiError ValidationError Any problems found when validating triplog object
+ *
+ * @apiErrorExample ValidationError
+ *   HTTP/1.1 400
+ *   {
+ *     "errors": {
+ *       "segments.0.mode": {
+ *         "message": "`biksssse` is not a valid enum value for path `mode`.",
+ *         "name": "ValidatorError",
+ *         "properties": {
+ *           "enumValues": [
+ *             "bike",
+ *             "carpool",
+ *             "drive",
+ *             "transit",
+ *             "vanpool",
+ *             "walk",
+ *             "telework"
+ *           ],
+ *           "type": "enum",
+ *           "message": "`{VALUE}` is not a valid enum value for path `{PATH}`.",
+ *           "path": "mode",
+ *           "value": "biksssse"
+ *         },
+ *         "kind": "enum",
+ *         "path": "segments.0.mode",
+ *         "value": "biksssse"
+ *       }
+ *     },
+ *     "message": "Validation failed",
+ *     "name": "ValidationError"
+ *   }
+ *
+ * @apiUse Authorization
  */
 app.put('/api/triplogs/:id',secureMiddleware,function(req,res){
   TriplogModel.findByIdAndUpdate(req.params.id,req.body,{runValidators:true},function(err,foundTriplog){
@@ -86,7 +216,16 @@ app.put('/api/triplogs/:id',secureMiddleware,function(req,res){
 })
 
 /**
- * Remove an existing triplog by id
+ * @api {delete} /api/triplogs/:id Delete an existing Triplog
+ * @apiName DeleteTriplog
+ * @apiGroup Triplogs
+ *
+ * @apiParam {ObjectId} id Object ID Triplog
+ *
+ * @apiSuccessExample Success-Response:
+ *   HTTP/1.1 200 OK
+ *
+ * @apiUse Authorization
  */
 app.delete('/api/triplogs/:id',secureMiddleware,function(req,res){
   TriplogModel.findByIdAndRemove(req.params.id,function(err,removedTriplog){
