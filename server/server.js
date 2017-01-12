@@ -99,7 +99,8 @@ app.get('/api/token',function(req,res){
  *      caloriesPerMile: 50
  *     }
  *   ]
- * *
+ *   
+ * @apiUse Authorization
  */
 app.get('/api/triplog-modes',secureMiddleware,function(req,res){
   res.send(config.triplogModes);
