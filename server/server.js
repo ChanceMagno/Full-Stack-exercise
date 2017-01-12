@@ -80,6 +80,32 @@ app.get('/api/token',function(req,res){
 })
 
 /**
+ * @api {get} /api/triplog-modes Get triplog modes
+ * @apiName GetTriplogModes
+ * @apiGroup Triplog Modes
+ *
+ * @apiSuccess {Array} triplogModes Array of Triplog modes (see `config.js`)
+ *
+ * @apiSuccessExample Modes
+ *   HTTP/1.1 200 OK
+ *   [
+ *     {
+ *      label: "Bike",
+ *      value: "bike",
+ *      verb : "biked",
+ *      vehiclesPerTrip: 0,
+ *      co2PerMile: 0,
+ *      dollarsPerMile: 0,
+ *      caloriesPerMile: 50
+ *     }
+ *   ]
+ * *
+ */
+app.get('/api/triplog-modes',secureMiddleware,function(req,res){
+  res.send(config.triplogModes);
+})
+
+/**
  * @api {get} /api/triplogs Get all triplogs
  * @apiName GetTriplogs
  * @apiGroup Triplogs
