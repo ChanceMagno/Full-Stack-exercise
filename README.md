@@ -28,7 +28,7 @@ These triplogs are used for ranking commuters and organizations in competitions 
    - feel free to modify/add/extend/etc.
  - it should have a vertical list of the last 30 days, similar to an "agenda view"
  - for each day, you should be able to see
-  - the existing triplog + ability to edit (and remove)
+  - the existing triplog + ability to edit (save, cancel & remove)
   - if no triplog is present
    - any suggestions that exist (which could be clickable)
    - a button to trigger display of a triplog form
