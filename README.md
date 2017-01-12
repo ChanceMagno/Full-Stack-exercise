@@ -34,9 +34,9 @@ These triplogs are used for ranking commuters and organizations in competitions 
    - a button to trigger display of a triplog form
  - a triplog form should have:
   - the ability to log 1 or more segments with
-   - time (in 1 hour increments)
-   - mode (defined by /api/triplog-modes)
-   - miles (where applicable)
+    - time (in 1 hour increments)
+    - mode (defined by /api/triplog-modes)
+    - miles (where applicable) 
 
 ## Guidelines
 
