@@ -122,12 +122,7 @@ app.get('/api/triplog-modes',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.get('/api/triplogs',secureMiddleware,function(req,res){
-  TriplogModel.find({},function(err,triplogs){
-    if(err){
-      return res.status(400).send(err);
-    }
-    res.send(triplogs);
-  })
+  return res.send([{message : "this should be a list of logs"}]);
 })
 
 /**
@@ -255,12 +250,7 @@ app.put('/api/triplogs/:id',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.delete('/api/triplogs/:id',secureMiddleware,function(req,res){
-  TriplogModel.findByIdAndRemove(req.params.id,function(err,removedTriplog){
-    if(err){
-      return res.status(400).send(err);
-    }
-    res.send(removedTriplog);
-  })
+  return res.send("deletion not implemented yet");
 })
 
 
