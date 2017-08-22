@@ -15,6 +15,7 @@ the RideAmigos frontend developer exercise.
  - verify that values in `config.js` such as port/mongo will not conflict with any local data
  - to install an example set of data in your Mongo DB run `node ./example-data/triplogs.js`
  - to run the server on port 3000 run `node server.js`
+ - fill in the 2 missing routes (GET /api/triplogs and DELETE /api/triplogs/:id) with code that implements their documentation
  
 ## Concepts
 
