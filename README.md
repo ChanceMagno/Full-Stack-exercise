@@ -1,10 +1,11 @@
-# Front-end Developer Exercise
+# Full Stack Developer Exercise
 
 ## Description
 
 Create an Angular 1.x based project which will allow a user to:
  - Quickly "CRUD" triplogs for a 30 day timeline
  - When pre-existing triplogs exist, see suggested triplogs and log for a day with a single click
+
 
 ### What is a Triplog?
 
@@ -17,6 +18,7 @@ These triplogs are used for ranking commuters and organizations in competitions 
  1. Fork this repo
  2. Do great stuff
   - Communicate, ask questions, etc.
+  - Ensure both the frontend and backend portions are completed
  3. Submit a PR with a brief writeup of what you did
 
 ## Functional Requirements
@@ -24,6 +26,7 @@ These triplogs are used for ranking commuters and organizations in competitions 
  - use angular 1.x
   - if using anything that would break widespread browser compatibility (i.e., IE10+, mobile browsers), that's okay, just document it
  - consume APIs from included `server` project (see `server/README.md`)
+   - 2 API routes (the GET /api/triplogs and the DELETE /api/triplogs/:id routes) are unfinished, start by finishing those with appropriate Mongo/Express code
    - Disclaimer: this hasn't been fully tested and may have issues
    - feel free to modify/add/extend/etc.
  - it should have a vertical list of the last 30 days, similar to an "agenda view"
