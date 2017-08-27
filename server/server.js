@@ -252,8 +252,12 @@ app.put('/api/triplogs/:id',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.delete('/api/triplogs/:id',secureMiddleware,function(req,res){
-  throw new Error("You need to implement this as part of the exercise!");
-  return res.send("i've deleted log with ID " + req.params.id);
+  TriplogModel.findByIdAndRemove(req.params.todoId, function (err, todo) {
+    if (err){
+    return res.send(err)
+    }
+    return res.send("i've deleted log with ID " + req.params.id);
+});
 })
 
 
