@@ -10,6 +10,7 @@ var app = express();
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var TriplogModel = require('./model/Triplog');
+var exampleTriplogs = require('./example-data/Triplogs');
 
 // connect to Mongo DB
 mongoose.connect(config.MONGO);
@@ -25,15 +26,15 @@ app.use(bodyParser.urlencoded({
 
 // randomly create a new auth token each run
 var authToken = _.sampleSize("ABCDEDFGHIJKL".split(''),5).join('');
+
 // simulate token-based authentication
 var secureMiddleware = function(req,res,next){
-  if(!req.headers.authorization || req.headers.authorization !== "Bearer "+authToken){
+  if(!req.headers.authorization || req.headers.authorization !== "Bearer " + authToken){
     return res.status(401).send("Not Authorized");
   }else{
     next();
   }
 }
-
 /**
  * Verify that http server is available by visiting this
  * in a browser:
@@ -42,6 +43,7 @@ var secureMiddleware = function(req,res,next){
 app.get('/', function (req, res) {
   res.send('Working!')
 })
+
 
 /**
  * @apiDefine Authorization
@@ -99,11 +101,11 @@ app.get('/api/token',function(req,res){
  *      caloriesPerMile: 50
  *     }
  *   ]
- *   
+ *
  * @apiUse Authorization
  */
 app.get('/api/triplog-modes',secureMiddleware,function(req,res){
-  res.send(config.triplogModes);
+  res.send(triplogModes);
 })
 
 /**
@@ -122,8 +124,7 @@ app.get('/api/triplog-modes',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.get('/api/triplogs',secureMiddleware,function(req,res){
-  throw new Error("You need to implement this as part of the exercise!");
-  return res.send([{message : "this should be a list of logs"}]);
+  res.send(exampleTriplogs);
 })
 
 /**
