@@ -10,7 +10,6 @@ var app = express();
 var mongoose = require('mongoose');
 var _ = require('lodash');
 var TriplogModel = require('./model/Triplog');
-var exampleTriplogs = require('./example-data/Triplogs');
 
 // connect to Mongo DB
 mongoose.connect(config.MONGO);
@@ -29,7 +28,7 @@ var authToken = _.sampleSize("ABCDEDFGHIJKL".split(''),5).join('');
 
 // simulate token-based authentication
 var secureMiddleware = function(req,res,next){
-  if(!req.headers.authorization || req.headers.authorization !== "Bearer " + authToken){
+  if(!req.headers.authorization || req.headers.authorization !== "Bearer "+authToken){
     return res.status(401).send("Not Authorized");
   }else{
     next();
@@ -105,7 +104,7 @@ app.get('/api/token',function(req,res){
  * @apiUse Authorization
  */
 app.get('/api/triplog-modes',secureMiddleware,function(req,res){
-  res.send(triplogModes);
+  res.send(config.triplogModes);
 })
 
 /**
@@ -124,7 +123,13 @@ app.get('/api/triplog-modes',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.get('/api/triplogs',secureMiddleware,function(req,res){
-  res.send(exampleTriplogs);
+  TriplogModel.find(function (err, Triplogs) {
+    if (err) {
+        res.status(500).send(err)
+    } else {
+        res.send(Triplogs);
+    }
+  });
 })
 
 /**
@@ -252,12 +257,12 @@ app.put('/api/triplogs/:id',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.delete('/api/triplogs/:id',secureMiddleware,function(req,res){
-  TriplogModel.findByIdAndRemove(req.params.todoId, function (err, todo) {
-    if (err){
-    return res.send(err)
+  TriplogModel.findByIdAndRemove(req.params.todoId,function(err, todo){
+    if(err){
+      return res.status(400).send(err);
     }
-    return res.send("i've deleted log with ID " + req.params.id);
-});
+    res.send("Deleted Triplog with ID: "+req.params.id);
+  });
 })
 
 
