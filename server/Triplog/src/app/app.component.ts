@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {TriplogsApiService} from './services/triplogs-api-service/triplogs-api.service';
 
 @Component({
   selector: 'app-root',
@@ -6,8 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit{
 
-  constructor() {}
+  constructor(private triplogsApiService: TriplogsApiService) {
+    this.triplogsApiService.authToken;
+  }
+
+  ngOnInit(){
+    this.triplogsApiService.getTripLogs();
+  }
 
 }
