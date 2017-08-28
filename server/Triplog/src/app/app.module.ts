@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TriplogsApiService } from './services/triplogs-api-service/triplogs-api.service';
 
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -12,7 +14,7 @@ import { TriplogsApiService } from './services/triplogs-api-service/triplogs-api
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
   ],
   providers: [TriplogsApiService],
   bootstrap: [AppComponent]
