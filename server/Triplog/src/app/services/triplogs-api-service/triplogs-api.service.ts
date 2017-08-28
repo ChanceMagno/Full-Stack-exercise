@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Triplog } from '../../Triplog';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+
 
 @Injectable()
 export class TriplogsApiService {
@@ -31,20 +32,20 @@ export class TriplogsApiService {
   }
 
   getTripLogs(){
-    this.http.get(this.triplogsUrl, this.options).map((res: Response) => res.json()).subscribe(data =>{
-    this.data = data;
-    console.log(data);
-      })
+    this.authToken = 'Bearer BIFLE';
+    this.headers.append("authorization", this.authToken);
+    this.options = new RequestOptions({headers: this.headers})
+    return this.http.get(this.triplogsUrl, this.options)
+   .map(res => res.json())
   }
 
   deleteTripLog(Id : string){
-    this.http.delete(this.triplogsUrl + '/' + Id).map((res: Response) => res.text()).subscribe(data =>{
+    return this.http.delete(this.triplogsUrl + '/' + Id).map((res: Response) => res.text()).subscribe(data =>{
       this.data = data;
     })
   }
 
   createTripLog(data: any){
-    //TODO: convert Triplog to JSON
     this.authToken = 'Bearer BIFLE';
     this.headers.append("authorization", this.authToken);
     this.options = new RequestOptions({headers: this.headers})
@@ -53,9 +54,8 @@ export class TriplogsApiService {
     })
   }
 
-  updateTriplog(updatedTripLog: Triplog, id){
-    //TODO: convert Triplog to JSON
-    this.http.put(this.triplogsUrl + id, updatedTripLog).map((res: Response) => res.json()).subscribe(data =>{
+  updateTriplog(data: any, id){
+    this.http.put(this.triplogsUrl + id, data).map((res: Response) => res.json()).subscribe(data =>{
       this.data = data;
     })
   }
