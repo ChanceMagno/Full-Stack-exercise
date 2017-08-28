@@ -9,14 +9,15 @@ export class TriplogsApiService {
   private authTokenUrl = this.baseUrl + 'token';
   private triplogsUrl = this.baseUrl + 'triplogs';
   private data: any = {};
-  public headers = new Headers();
-  public authToken = '';
-  public options;
+  private headers = new Headers();
+  private authToken = '';
+  private options;
+
 
   constructor(public http: Http) {
-    this.authToken = 'Bearer BIFLE';
-    this.headers.append("authorization", this.authToken);
-    this.options = new RequestOptions({headers: this.headers})
+    // this.authToken = 'Bearer BIFLE';
+    // this.headers.append("authorization", this.authToken);
+    // this.options = new RequestOptions({headers: this.headers})
   }
 
   getAuthToken(){
@@ -42,13 +43,18 @@ export class TriplogsApiService {
     })
   }
 
-  saveTripLog(newTriplog: Triplog){
-    this.http.post(this.triplogsUrl, newTriplog).map((res: Response) => res.json()).subscribe(data => {
+  createTripLog(data: any){
+    //TODO: convert Triplog to JSON
+    this.authToken = 'Bearer BIFLE';
+    this.headers.append("authorization", this.authToken);
+    this.options = new RequestOptions({headers: this.headers})
+    this.http.post(this.triplogsUrl, data, this.options).map((res: Response) => res.json()).subscribe(data => {
       this.data = data;
     })
   }
 
   updateTriplog(updatedTripLog: Triplog, id){
+    //TODO: convert Triplog to JSON
     this.http.put(this.triplogsUrl + id, updatedTripLog).map((res: Response) => res.json()).subscribe(data =>{
       this.data = data;
     })
