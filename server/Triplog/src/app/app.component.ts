@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TriplogsApiService} from './services/triplogs-api-service/triplogs-api.service';
-
+import { TriplogsApiService } from './services/triplogs-api-service/triplogs-api.service';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -10,9 +9,7 @@ import 'rxjs/add/operator/map';
 })
 
 export class AppComponent implements OnInit{
-
-  private today = new Date();
-  private data: any = {};
+  private triplogs: any;
   constructor(private triplogsApiService: TriplogsApiService) {
   }
 
@@ -22,8 +19,7 @@ export class AppComponent implements OnInit{
 
   getTriplogs() {
     this.triplogsApiService.getTripLogs().subscribe(data => {
-      this.data = data;
-      console.log(this.data);
+      this.triplogs = Object.keys(data).map(function (key) { return data[key]; });
     })
   }
 
