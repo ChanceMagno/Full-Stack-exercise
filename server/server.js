@@ -127,6 +127,7 @@ app.get('/api/triplogs',secureMiddleware,function(req,res){
     if (err) {
         res.status(500).send(err)
     } else {
+      //may need to handle limit of triplogs here to 30 days
         res.send(Triplogs);
     }
   });
