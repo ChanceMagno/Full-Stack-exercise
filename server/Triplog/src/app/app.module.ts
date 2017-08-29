@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TriplogsApiService } from './services/triplogs-api-service/triplogs-api.service';
 import { HomeComponent } from './home/home.component';
 import { routing } from './router/app.routing';
+import { AllTriplogsComponent } from './all-triplogs/all-triplogs.component';
 
 
 
@@ -13,7 +14,8 @@ import { routing } from './router/app.routing';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    AllTriplogsComponent
   ],
   imports: [
     routing,
