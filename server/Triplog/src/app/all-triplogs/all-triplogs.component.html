@@ -1,13 +1,40 @@
-<div class="row">
-  <div class="col l8 offset-l2">
-    <ul *ngFor="let triplog of triplogs; let i = index">
-      <li class="collection-item avatar z-depth-3">
-        <p>{{triplog?.date | date}}</p>
-        <div *ngFor="let segment of triplogs[i].segments">
-          <li>{{segment?.mode}}</li>
-          <li>{{segment?.dateTime | date}}</li>
+<div class="container">
+  <div class="row" *ngFor="let triplog of triplogs; let i = index">
+    <div class="col s12 m6 offset-m3 l8 offset-l2" >
+      <div class="card grey darken-1">
+        <div class="card-content white-text">
+          <div class="row">
+            <span class="card-title right">{{triplog.date | date}}</span>
+          </div>
+          <div *ngFor="let segment of triplogs[i].segments; let tripNumber = index;">
+            <div class="row center-align">
+              <div class="col l4 m4 s4">
+                <h5>Trip: </h5>
+                <div class="row">
+                  <p><span></span>{{tripNumber + 1}}</p>
+                </div>
+              </div>
+              <div class="col l4">
+                <h5>Mode: </h5>
+                <div class="row">
+                  <p><span></span>{{segment.mode}}</p>
+                </div>
+              </div>
+              <div class="col l4">
+                <h5>Miles: </h5>
+                <div class="row">
+                  <p><span></span>{{segment.miles}}</p>
+                </div>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="card-action right-align">
+            <a class="btn-floating btn-large waves-effect waves-light blue" (click)="editTriplog(triplog._id)"><i class="material-icons">edit</i></a>
+            <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
+          </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </div>

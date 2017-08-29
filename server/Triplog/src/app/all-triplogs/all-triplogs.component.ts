@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
 import { DatePipe } from '@angular/common';
+import { DayLimitPipe } from '../day-limit.pipe'
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -10,8 +13,9 @@ import { DatePipe } from '@angular/common';
 })
 export class AllTriplogsComponent implements OnInit {
   private triplogs: any;
+  private sortedTripLogs: any = [];
 
-  constructor(private triplogsApiService: TriplogsApiService) { }
+  constructor(private triplogsApiService: TriplogsApiService, private router: Router) { }
 
   ngOnInit() {
     this.getTriplogs();
@@ -23,5 +27,10 @@ export class AllTriplogsComponent implements OnInit {
       error => console.log(error);
     })
   }
+
+  editTripLog(id: string){
+   this.router.navigate(['triplogs/:id']);
+  }
+
 
 }
