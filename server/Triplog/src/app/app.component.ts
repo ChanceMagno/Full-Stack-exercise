@@ -14,7 +14,11 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.getTriplogs();
+    this.getAuthToken();
+  }
+
+  getAuthToken(){
+    this.triplogsApiService.getAuthToken();
   }
 
   getTriplogs() {

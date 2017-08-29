@@ -22,25 +22,22 @@ export class TriplogsApiService {
   }
 
   getAuthToken(){
-    this.http.get(this.authTokenUrl).map((res: Response) => res.json()).subscribe(data =>{
+    this.http.get(this.authTokenUrl).map((res: Response) => res.json())
+    .subscribe(data =>{
       // TODO:  need to store token
-      this.authToken = data.token;
+      this.authToken = "Bearer " + data.token;
       this.headers.append("authorization", this.authToken);
       this.options = new RequestOptions({headers: this.headers})
-      console.log(this.authToken);
-    })
+      })
   }
 
   getTripLogs(){
-    this.authToken = 'Bearer BIFLE';
-    this.headers.append("authorization", this.authToken);
-    this.options = new RequestOptions({headers: this.headers})
     return this.http.get(this.triplogsUrl, this.options)
    .map(res => res.json())
   }
 
-  deleteTripLog(Id : string){
-    return this.http.delete(this.triplogsUrl + '/' + Id).map((res: Response) => res.text()).subscribe(data =>{
+  deleteTripLog(id : string){
+    return this.http.delete(this.triplogsUrl + '/' + id).map((res: Response) => res.text()).subscribe(data =>{
       this.data = data;
     })
   }

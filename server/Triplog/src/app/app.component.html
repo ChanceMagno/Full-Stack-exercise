@@ -1,13 +1,13 @@
+
 <ul *ngFor="let triplog of triplogs; let i = index">
     <li class="collection-item avatar z-depth-3">
       <h1>{{triplog?.date}}</h1>
       <h2>{{triplog?._id}}</h2>
       <h2>{{i}}</h2>
-        <ul *ngFor="let segments of triplogs[i].segments">
-          <li>{{segments.mode}}</li>
-          <li>{{segments._id}}</li>
-        </ul>
+        <div *ngFor="let segment of triplogs[i].segments">
+          <li>{{segment?.mode}}</li>
+          <li>{{segment?._id}}</li>
+          <li>{{segment?.dateTime}}</li>
+        </div>
     </li>
   </ul>
-
-  <a materialize="tooltip" class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">Hover me!</a>
