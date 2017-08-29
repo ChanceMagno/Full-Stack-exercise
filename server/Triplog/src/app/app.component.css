@@ -2,3 +2,12 @@
   background-color: #545454;
   color: #f0c441;
 }
+
+.logoImage {
+  padding: 5px;
+}
+
+nav {
+  height: 100px;
+  margin-bottom: 25px;
+}
