@@ -1,4 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
+;
+import { DayLimitPipe } from './day-limit.pipe'import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -7,6 +8,7 @@ import { TriplogsApiService } from './services/triplogs-api-service/triplogs-api
 import { HomeComponent } from './home/home.component';
 import { routing } from './router/app.routing';
 import { AllTriplogsComponent } from './all-triplogs/all-triplogs.component';
+import { 30dayPipe } from './30day.pipe';
 
 
 
@@ -15,7 +17,8 @@ import { AllTriplogsComponent } from './all-triplogs/all-triplogs.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    AllTriplogsComponent
+    AllTriplogsComponent,
+    30dayPipe, DayLimitPipe
   ],
   imports: [
     routing,

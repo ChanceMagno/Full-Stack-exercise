@@ -16,15 +16,11 @@ export class TriplogsApiService {
 
 
   constructor(public http: Http) {
-    // this.authToken = 'Bearer BIFLE';
-    // this.headers.append("authorization", this.authToken);
-    // this.options = new RequestOptions({headers: this.headers})
   }
 
   getAuthToken(){
     this.http.get(this.authTokenUrl).map((res: Response) => res.json())
     .subscribe(data =>{
-      // TODO:  need to store token
       this.authToken = "Bearer " + data.token;
       this.headers.append("authorization", this.authToken);
       this.options = new RequestOptions({headers: this.headers})
@@ -43,9 +39,6 @@ export class TriplogsApiService {
   }
 
   createTripLog(data: any){
-    this.authToken = 'Bearer BIFLE';
-    this.headers.append("authorization", this.authToken);
-    this.options = new RequestOptions({headers: this.headers})
     this.http.post(this.triplogsUrl, data, this.options).map((res: Response) => res.json()).subscribe(data => {
       this.data = data;
     })

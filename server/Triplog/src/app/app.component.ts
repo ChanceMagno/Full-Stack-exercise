@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TriplogsApiService } from './services/triplogs-api-service/triplogs-api.service';
 
-// import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-root',

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class AllTriplogsComponent implements OnInit {
   getTriplogs() {
     this.triplogsApiService.getTripLogs().subscribe(data => {
       this.triplogs = Object.keys(data).map(function (key) { return data[key]; });
+      error => console.log(error);
     })
   }
 
