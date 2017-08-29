@@ -3,9 +3,16 @@ margin-left: 10px;
 }
 
 .container {
-  padding: 30px;
+  /*padding: 30px;*/
 }
 
 .card-title {
   color: yellow;
+}
+
+.container {
+  background-image: url("http://neurogadget.net/wp-content/uploads/2015/10/Google-Maps-Apple-Maps-Here-Maps.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }

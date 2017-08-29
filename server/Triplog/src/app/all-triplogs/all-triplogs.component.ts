@@ -28,8 +28,11 @@ export class AllTriplogsComponent implements OnInit {
     })
   }
 
-  editTripLog(id: string){
-   this.router.navigate(['triplogs/:id']);
+  editTriplog(id: string){
+    // console.log("here")
+    // this.triplogs.splice(id, 1);
+    // console.log(this.triplogs);
+  //  this.router.navigate(['triplogs/:id']);
   }
 
 
