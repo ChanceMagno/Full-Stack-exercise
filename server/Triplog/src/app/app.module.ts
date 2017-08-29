@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TriplogsApiService } from './services/triplogs-api-service/triplogs-api.service';
 import { HomeComponent } from './home/home.component';
+import { routing } from './router/app.routing';
+
 
 
 
@@ -14,6 +16,7 @@ import { HomeComponent } from './home/home.component';
     HomeComponent
   ],
   imports: [
+    routing,
     BrowserModule,
     FormsModule,
     HttpModule,
