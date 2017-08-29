@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TriplogsApiService } from './services/triplogs-api-service/triplogs-api.service';
-import { Router } from '@angular/router';
 
 // import 'rxjs/add/operator/map';
 
@@ -11,27 +10,11 @@ import { Router } from '@angular/router';
 })
 
 export class AppComponent implements OnInit{
-  private triplogs: any;
-  constructor(private triplogsApiService: TriplogsApiService, private router: Router) {
+
+  constructor() {
   }
 
   ngOnInit(){
-    this.getAuthToken();
   }
-
-  getAuthToken(){
-    this.triplogsApiService.getAuthToken();
-  }
-
-  getTriplogs() {
-    this.triplogsApiService.getTripLogs().subscribe(data => {
-      this.triplogs = Object.keys(data).map(function (key) { return data[key]; });
-    })
-  }
-
-  routeToTriplogs(){
-    // this.router.navigate(['triplogs/']);
-  }
-
 
 }

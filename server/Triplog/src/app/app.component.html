@@ -1,14 +1,1 @@
 <router-outlet></router-outlet>
-
-<ul *ngFor="let triplog of triplogs; let i = index">
-    <li class="collection-item avatar z-depth-3">
-      <h1>{{triplog?.date}}</h1>
-      <h2>{{triplog?._id}}</h2>
-      <h2>{{i}}</h2>
-        <div *ngFor="let segment of triplogs[i].segments">
-          <li>{{segment?.mode}}</li>
-          <li>{{segment?._id}}</li>
-          <li>{{segment?.dateTime}}</li>
-        </div>
-    </li>
-  </ul>
