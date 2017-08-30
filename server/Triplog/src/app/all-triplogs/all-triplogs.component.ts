@@ -35,5 +35,11 @@ export class AllTriplogsComponent implements OnInit {
   //  this.router.navigate(['triplogs/:id']);
   }
 
+  setBackground(position: number){
+    if(position % 2 === 0){
+      return "gray";
+    }
+  }
+
 
 }
