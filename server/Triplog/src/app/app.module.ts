@@ -8,6 +8,8 @@ import { HomeComponent } from './home/home.component';
 import { routing } from './router/app.routing';
 import { AllTriplogsComponent } from './all-triplogs/all-triplogs.component';
 import { DayLimitPipe } from './day-limit.pipe';
+import * as moment from 'moment'
+
 
 
 
@@ -19,7 +21,6 @@ import { DayLimitPipe } from './day-limit.pipe';
     HomeComponent,
     AllTriplogsComponent,
     DayLimitPipe
-
   ],
   imports: [
     routing,

@@ -3,11 +3,6 @@
   margin-top: 10px;
 }
 
-.card-title {
-  color: yellow;
-  padding-right: 10px;
-}
-
 .container {
   margin-top:  80px;
 }
@@ -15,11 +10,6 @@
 .agenda {
   background: white;
   padding-bottom: 15px;
-}
-
-.segmentData {
-  color: #b2d2fe;
-  font-size:  18px;
 }
 
 .gray {

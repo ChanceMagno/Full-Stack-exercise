@@ -23,30 +23,28 @@ export class TriplogsApiService {
     .subscribe(data =>{
       this.authToken = "Bearer " + data.token;
       this.headers.append("authorization", this.authToken);
-      this.options = new RequestOptions({headers: this.headers})
-      })
+      this.options = new RequestOptions({headers: this.headers});
+    });
   }
 
   getTripLogs(){
     return this.http.get(this.triplogsUrl, this.options)
-   .map(res => res.json())
+   .map(res => res.json());
   }
 
   deleteTripLog(id : string){
     return this.http.delete(this.triplogsUrl + '/' + id).map((res: Response) => res.text()).subscribe(data =>{
       this.data = data;
-    })
+    });
   }
 
   createTripLog(data: any){
-    this.http.post(this.triplogsUrl, data, this.options).map((res: Response) => res.json()).subscribe(data => {
-      this.data = data;
-    })
+    return this.http.post(this.triplogsUrl, data, this.options).map(res => res.json());
   }
 
   updateTriplog(data: any, id){
     this.http.put(this.triplogsUrl + id, data).map((res: Response) => res.json()).subscribe(data =>{
       this.data = data;
-    })
+    });
   }
 }
