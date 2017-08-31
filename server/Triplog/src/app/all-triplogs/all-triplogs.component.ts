@@ -47,7 +47,7 @@ export class AllTriplogsComponent implements OnInit {
 
   setBackground(position: number){
     if(position % 2 === 0){
-      return "gray";
+      return "gray centered";
     }
   }
 

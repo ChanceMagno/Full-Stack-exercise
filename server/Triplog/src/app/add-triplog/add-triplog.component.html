@@ -1,3 +1,25 @@
-<p>
-  add-triplog works!
-</p>
+
+<div class="container col s12">
+  <div class="triplogDate center-align">
+    <p>Triplog for {{currentDate | date}}</p>
+  </div>
+  <form class="newTriplogForm"  method="post" [formGroup]="newTriplogForm">
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="miles" type="number" class="validate" [value]="miles">
+        <label for="miles">Miles</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col-s12">
+        <select class="label" materialize="material_select" [materializeSelectOptions]="type" formControlName="category">
+           <option value="" disabled selected>Transportation</option>
+           <option *ngFor="let tripmode of tripModes" [value]="tripmode">{{tripmode}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="center-align">
+      <a (click)="checkSaveOrUpdate" class="waves-effect waves-light btn green"><i class="material-icons right">check</i>Save</a>
+    </div>
+  </form>
+</div>
