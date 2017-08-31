@@ -6,20 +6,20 @@
   <form class="newTriplogForm"  method="post" [formGroup]="newTriplogForm">
     <div class="row">
       <div class="input-field col s12">
-        <input id="miles" type="number" class="validate" [value]="miles">
+        <input id="miles" type="number" class="validate invalid" formControlName="miles">
         <label for="miles">Miles</label>
       </div>
     </div>
     <div class="row">
       <div class="input-field col-s12">
-        <select class="label" materialize="material_select" [materializeSelectOptions]="type" formControlName="category">
+        <select class="label" materialize="material_select" [materializeSelectOptions]="type" formControlName="mode">
            <option value="" disabled selected>Transportation</option>
            <option *ngFor="let tripmode of tripModes" [value]="tripmode">{{tripmode}}</option>
         </select>
       </div>
     </div>
     <div class="center-align">
-      <a (click)="checkSaveOrUpdate" class="waves-effect waves-light btn green"><i class="material-icons right">check</i>Save</a>
+      <a (click)="checkSaveOrUpdate()" [class]="validateForm()"><i class="material-icons right">check</i>Save</a>
     </div>
   </form>
 </div>

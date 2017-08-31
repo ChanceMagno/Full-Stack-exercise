@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input } from '@angular/core';
 import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
 import { DatePipe } from '@angular/common';
 import { DayLimitPipe } from '../day-limit.pipe'
@@ -16,7 +16,7 @@ import { MaterializeAction } from 'angular2-materialize';
   styleUrls: ['./all-triplogs.component.css']
 })
 
-export class AllTriplogsComponent implements OnInit {
+export class AllTriplogsComponent implements OnInit{
   private triplogs: any = [];
   private date = new Date();
   private emptyTriplog: any;
@@ -27,8 +27,11 @@ export class AllTriplogsComponent implements OnInit {
   private warnAction = new EventEmitter;
   private triplogIndex: number;
   private segmentIndex: number;
+  latestTriplog: any;
 
   constructor(private triplogsApiService: TriplogsApiService, private router: Router) {}
+
+
 
   ngOnInit() {
     this.date.setDate(this.date.getDate());
@@ -39,6 +42,10 @@ export class AllTriplogsComponent implements OnInit {
     if(!this.triplogsApiService.checkToken()){
         this.router.navigate(['/']);
     }
+  }
+
+  getLatestTriplog(){
+  return  this.latestTriplog = this.triplogs[0];
   }
 
   warnModal() {
@@ -114,39 +121,6 @@ export class AllTriplogsComponent implements OnInit {
     })
   }
 
-  saveTriplog(){
-    this.checkToken()
-    // var date = moment(this.triplogs[0].date);
-    // var y = moment(date, 'YYYY-MM-DD')
-    // let date =  Date.parse(this.triplogs[0].date);
-    // console.log(this.triplogs[0].date, "triplogDate")
-    // var today = moment();
-    // var yesterday = moment().subtract(1, 'day');
-    // if(moment(this.date).isSame(today, 'day'))
-    // console.log('Today');
-    // else if(moment(this.date).isSame(yesterday, 'day'))
-    // console.log('Yesterday');
-    // console.log(moment(date).isAfter(date, 'day'));
-
-  // let data: any =  {
-  //   date: this.date.setUTCDate(this.date.getUTCDate()),
-  //   updated: "2017-08-28T16:17:02.714Z",
-  //   created: "2017-08-26T19:22:48.230Z",
-  //   segments: [
-  //       {
-  //         mode: "bike",
-  //         miles: 3,
-  //         dateTime: this.date.setUTCDate(this.date.getUTCDate()),
-  //       }
-  //   ]
-  // }
-  //
-  //  this.triplogsApiService.createTripLog(data).subscribe(data => {
-  //    this.getTriplogs();
-  //    error => console.log(error);
-  //  })
-  }
-
   getEmptyTriplog(day: number){
     let date = new Date();
     date.setDate(date.getDate() - day);
@@ -172,6 +146,9 @@ export class AllTriplogsComponent implements OnInit {
             this.triplogs.splice(p, 1);
         }
       }
+      if(i === 30){
+        this.latestTriplog = this.triplogs[0];
+      }
     }
   }
 
@@ -181,6 +158,7 @@ export class AllTriplogsComponent implements OnInit {
     this.triplogs = data.sort((a, b) => new Date(b.date).getUTCDate() - new Date(a.date).getUTCDate());
     if(length > this.triplogsToDisplay){
       this.triplogs = this.triplogs.splice(0, this.triplogsToDisplay);
+      this.latestTriplog = this.triplogs[0];
     } else if (length < this.triplogsToDisplay){
       this.addEmptyTriplogs();
     }
