@@ -18,6 +18,14 @@ export class TriplogsApiService {
   constructor(public http: Http) {
   }
 
+  checkToken(){
+     if(this.authToken === ""){
+       return false;
+    } else return true;
+  }
+
+
+
   getAuthToken(){
     this.http.get(this.authTokenUrl).map((res: Response) => res.json())
     .subscribe(data =>{
@@ -41,10 +49,9 @@ export class TriplogsApiService {
   createTripLog(data: any){
     return this.http.post(this.triplogsUrl, data, this.options).map(res => res.json());
   }
-
   updateTriplog(data: any, id){
-    this.http.put(this.triplogsUrl + id, data).map((res: Response) => res.json()).subscribe(data =>{
-      this.data = data;
-    });
+    console.log(typeof data)
+    return this.http.put(this.triplogsUrl + '/' + id, data)
+    .map( res => res.json());
   }
 }

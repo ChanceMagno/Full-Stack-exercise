@@ -18,8 +18,8 @@
       <td><a class="btn-floating btn-small waves-effect waves-light red" (click)="saveTriplog()"><i class="material-icons">save</i></a></td>
     </div>
   </div>
-  <div class="col l5 agenda">
-    <table class="centered">
+  <div class="col l6 ">
+    <table class="centered agenda">
       <thead>
        <tr>
         <th>Time</th>
@@ -44,9 +44,12 @@
   </div>
   <div id="warnModal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="warnAction">
    <div class="modal-content">
-     <h4 class="center-align">Delete Your Log</h4>
-     <p class="center-align">Are you sure you want to delete this log?</p>
-          <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am a tooltip" >Hover me!</a>
+    <h4 class="center-align">Delete Your Log</h4>
+    <p class="center-align">Are you sure you want to delete this log?</p>
+    <div class="row modalButtons">
+      <a (click)="cancelDelete()" class="waves-effect waves-light btn yellow">Cancel</a>
+      <a (click)="checkIfDeleteOrUpdate()" class="waves-effect waves-light btn confirmDeleteButton red pulse">Delete</a>
+    </div>
    </div>
  </div>
 </div>

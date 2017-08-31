@@ -15,6 +15,7 @@ import { MaterializeAction } from 'angular2-materialize';
   templateUrl: './all-triplogs.component.html',
   styleUrls: ['./all-triplogs.component.css']
 })
+
 export class AllTriplogsComponent implements OnInit {
   private triplogs: any = [];
   private date = new Date();
@@ -23,13 +24,21 @@ export class AllTriplogsComponent implements OnInit {
   private testDate = new Date();
   private triplogsToDisplay: number = 30;
   Materialize:any;
-  warnAction = new EventEmitter;
+  private warnAction = new EventEmitter;
+  private triplogIndex: number;
+  private segmentIndex: number;
 
   constructor(private triplogsApiService: TriplogsApiService, private router: Router) {}
 
   ngOnInit() {
     this.date.setDate(this.date.getDate());
     this.getTriplogs();
+  }
+
+  checkToken(){
+    if(!this.triplogsApiService.checkToken()){
+        this.router.navigate(['/']);
+    }
   }
 
   warnModal() {
@@ -55,7 +64,34 @@ export class AllTriplogsComponent implements OnInit {
   }
 
   verifyDeletion(triplogIndex: number, segmentIndex: number){
+    this.triplogIndex = triplogIndex;
+    this.segmentIndex = segmentIndex;
     this.warnModal();
+  }
+
+  closeModal(){
+    this.warnAction.emit({action:"modal",params:['close']});
+  }
+
+  cancelDelete(){
+    this.triplogIndex = undefined;
+    this.segmentIndex = undefined;
+    this.closeModal();
+  }
+
+  checkIfDeleteOrUpdate(){
+    var segmentsLength = Object.keys(this.triplogs[this.triplogIndex].segments).length;
+    if(segmentsLength > 1){
+        this.removeSegment();
+    } else {
+      this.deleteTriplog();
+    }
+      this.closeModal();
+  }
+
+  deleteTriplog(){
+    console.log('delete called');
+    this.triplogsApiService.deleteTripLog(this.triplogs[this.triplogIndex]._id);
   }
 
   getTriplogs() {
@@ -65,16 +101,23 @@ export class AllTriplogsComponent implements OnInit {
     })
   }
 
-  editTriplog(id: string){
-    // console.log("here")
-    // this.triplogs.splice(id, 1);
-    // console.log(this.triplogs);
-  //  this.router.navigate(['triplogs/:id']);
+  removeSegment(){
+    this.triplogs[this.triplogIndex].segments.splice(this.segmentIndex, 1)
+    let triplogToUpdate = this.triplogs[this.triplogIndex]
+    this.updateTriplog(triplogToUpdate)
+  }
+
+  updateTriplog(triplogToUpdate: any){
+    this.triplogsApiService.updateTriplog(triplogToUpdate, triplogToUpdate._id).subscribe(data => {
+      this.getTriplogs();
+      error => console.log(error);
+    })
   }
 
   saveTriplog(){
-    var date = moment(this.triplogs[0].date);
-    var y = moment(date, 'YYYY-MM-DD')
+    this.checkToken()
+    // var date = moment(this.triplogs[0].date);
+    // var y = moment(date, 'YYYY-MM-DD')
     // let date =  Date.parse(this.triplogs[0].date);
     // console.log(this.triplogs[0].date, "triplogDate")
     // var today = moment();
@@ -106,10 +149,7 @@ export class AllTriplogsComponent implements OnInit {
 
   getEmptyTriplog(day: number){
     let date = new Date();
-    console.log(date, "before")
     date.setDate(date.getDate() - day);
-    console.log(date, "after")
-    console.log(day)
     return this.emptyTriplog = {date: date, updated: "", created: "",
         segments: [{ mode: "", miles: 0, dateTime: date,}]
       };

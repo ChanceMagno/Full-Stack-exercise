@@ -12,6 +12,19 @@
   padding-bottom: 15px;
 }
 
+thead {
+  margin:  !important 50px;
+}
+
 .gray {
   background-color: lightgray;
+}
+
+.modalButtons {
+  text-align: center;
+}
+
+.btn   {
+color: black;
+margin: 15px;
 }
