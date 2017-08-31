@@ -9,6 +9,8 @@ import { routing } from './router/app.routing';
 import { AllTriplogsComponent } from './all-triplogs/all-triplogs.component';
 import { DayLimitPipe } from './day-limit.pipe';
 import * as moment from 'moment'
+import { MaterializeModule } from 'angular2-materialize';
+
 
 
 
@@ -27,6 +29,7 @@ import * as moment from 'moment'
     BrowserModule,
     FormsModule,
     HttpModule,
+    MaterializeModule
   ],
   providers: [TriplogsApiService],
   bootstrap: [AppComponent]

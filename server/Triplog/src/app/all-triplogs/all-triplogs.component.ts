@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
 import { DatePipe } from '@angular/common';
 import { DayLimitPipe } from '../day-limit.pipe'
 import { Router } from '@angular/router';
 import * as moment from 'moment'
+import { MaterializeAction } from 'angular2-materialize';
+
 
 
 
@@ -20,12 +22,40 @@ export class AllTriplogsComponent implements OnInit {
   private data: any = [];
   private testDate = new Date();
   private triplogsToDisplay: number = 30;
+  Materialize:any;
+  warnAction = new EventEmitter;
 
   constructor(private triplogsApiService: TriplogsApiService, private router: Router) {}
 
   ngOnInit() {
     this.date.setDate(this.date.getDate());
     this.getTriplogs();
+  }
+
+  warnModal() {
+  this.warnAction.emit({action:"modal",params:['open']});
+  }
+
+  setBackground(position: number){
+    if(position % 2 === 0){
+      return "gray";
+    }
+  }
+
+  checkDelete(index: number){
+    if(this.triplogs[index].segments[0].mode === ""){
+      return "disabled btn-floating btn-small waves-effect waves-light red";
+    } else {return "btn-floating btn-small waves-effect waves-light red"}
+  }
+
+  checkEdit(index: number){
+    if(this.triplogs[index].segments[0].mode === ""){
+      return "disabled btn-floating btn-small waves-effect waves-light blue";
+    } else {return "btn-floating btn-small waves-effect waves-light blue"}
+  }
+
+  verifyDeletion(triplogIndex: number, segmentIndex: number){
+    this.warnModal();
   }
 
   getTriplogs() {
@@ -85,39 +115,23 @@ export class AllTriplogsComponent implements OnInit {
       };
   }
 
-  setBackground(position: number){
-    if(position % 2 === 0){
-      return "gray";
-    }
-  }
-
-
-
   addEmptyTriplogs(){
     var triplogDate;
     var dateToCheck = moment();
     var length = Object.keys(this.triplogs).length;
-
-    // console.log("y", triplogDate.isAfter(moment().add(30, 'days')));
     for(var i = 0; i < this.triplogsToDisplay; i++){
       if(this.triplogs[i] === undefined){
         { this.triplogs.splice(p, 1, this.getEmptyTriplog(i))}
       }
       for(var p = 0; p < this.triplogsToDisplay; p++){
-
         if(this.triplogs[p] !== undefined){
           triplogDate = moment(this.triplogs[p].date);
           triplogDate = moment(triplogDate, 'YYYY-MM-DD')
         }
-
-
-
          if (triplogDate.isBefore(moment().subtract(this.triplogsToDisplay, 'days'))){
             this.triplogs.splice(p, 1);
         }
       }
-
-
     }
   }
 
