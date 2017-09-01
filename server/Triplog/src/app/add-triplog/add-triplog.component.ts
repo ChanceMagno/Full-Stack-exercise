@@ -35,16 +35,19 @@ export class AddTriplogComponent implements OnInit {
   }
 
   validateForm(){
-    var {mode, miles} = this.newTriplogForm.value;
-    if(miles === null && mode === "Telework" || miles !== null && mode !== "" || miles < 0 && mode === "Telework"){
-      return "waves-effect waves-light btn green right-align"
-    }  else {
-      return "waves-effect waves-light btn green right-align disabled"
-    }
+    // var {mode, miles} = this.newTriplogForm.value;
+    // if(miles === null && mode === "Telework" || miles !== null && mode !== "" || miles < 0 && mode === "Telework"){
+    //   return "waves-effect waves-light btn green right-align"
+    // }  else {
+    //   return "waves-effect waves-light btn green right-align disabled"
+    // }
+    return "waves-effect waves-light btn green right-align"
+
   }
 
   checkSaveOrUpdate(){
     var {mode, miles, time} = this.newTriplogForm.value;
+    this.setDateTime(time)
     if(this.lastTriplog === undefined || this.lastTriplog.segments[0].mode === ""){
       this.createNewTriplog();
     } else {
@@ -52,16 +55,24 @@ export class AddTriplogComponent implements OnInit {
     }
   }
 
+   setDateTime(time: string) {
+     var setTime = moment(time, ["h:mm A"]).format("HH:mm:ss");
+     var date = moment().format('MM/DD/YYYY');
+     var dateTime = moment(date + ' ' + setTime, 'MM/DD/YYYY HH:mm:ss');
+      return dateTime;
+    }
+
   updateTriplog(){
-    var currentDate = this.currentDate;
-    var {mode, miles} = this.newTriplogForm.value;
+    var {mode, miles, time} = this.newTriplogForm.value;
+    var dateTime = this.setDateTime(time);
     mode = mode.toLowerCase();
     var triplogToUpdate = {
       mode: mode,
       miles: miles,
-      dateTime: this.currentDate,
+      dateTime: dateTime,
     };
     this.lastTriplog.segments.push(triplogToUpdate)
+    this.lastTriplog.updated = this.currentDate;
     this.triplogsApiService.updateTriplog(this.lastTriplog, this.lastTriplog._id).subscribe(data => {
       error => console.log(error);
     })
