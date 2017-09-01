@@ -1,7 +1,7 @@
 <div class="container row">
   <div class="col l3 m12 s12">
     <div class="row">
-      <app-add-triplog [lastTriplog]='latestTriplog'></app-add-triplog>
+      <app-add-triplog [lastTriplog]='latestTriplog' (updateListEmitter)="getTriplogs()"></app-add-triplog>
     </div>
   </div>
   <div class="col l8 m12 s12 offset-l1 table">

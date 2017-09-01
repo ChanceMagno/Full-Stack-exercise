@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MaterializeModule } from "angular2-materialize";
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
@@ -17,6 +17,8 @@ export class AddTriplogComponent implements OnInit {
   private warning: string = "Please Fill Out All fields"
   private Materialize: any;
   @Input() lastTriplog: any;
+  @Output() updateListEmitter = new EventEmitter();
+
 
 
 
@@ -76,6 +78,7 @@ export class AddTriplogComponent implements OnInit {
     this.lastTriplog.segments.push(triplogToUpdate)
     this.lastTriplog.updated = this.currentDate;
     this.triplogsApiService.updateTriplog(this.lastTriplog, this.lastTriplog._id).subscribe(data => {
+      this.instantiateForm();
       error => console.log(error);
     })
   }
@@ -98,11 +101,11 @@ export class AddTriplogComponent implements OnInit {
       ]
     }
     this.triplogsApiService.createTripLog(data).subscribe(data => {
+      this.instantiateForm();
+      this.updateListEmitter.emit();
       error => console.log(error);
     })
-
   }
-
 
 
 }

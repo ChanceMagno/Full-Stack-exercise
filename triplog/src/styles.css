@@ -5,10 +5,3 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
-
-.preLoader {
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-}

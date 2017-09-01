@@ -32,6 +32,7 @@ export class AllTriplogsComponent implements OnInit{
   private preSelectedMode: string = '';
 
 
+
   constructor(private triplogsApiService: TriplogsApiService, private router: Router, private formBuilder: FormBuilder) {}
 
 
@@ -182,10 +183,15 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   getTriplogs() {
-    this.triplogsApiService.getTripLogs().subscribe(data => {
-      this.sortTriplogs(data);
-      error => console.log(error);
-    })
+    if(!this.triplogsApiService.checkToken()){
+        this.router.navigate(['/']);
+    } else {
+      this.triplogsApiService.getTripLogs().subscribe(data => {
+        this.sortTriplogs(data);
+        error => console.log(error);
+      })
+    }
+
   }
 
   removeSegment(){
