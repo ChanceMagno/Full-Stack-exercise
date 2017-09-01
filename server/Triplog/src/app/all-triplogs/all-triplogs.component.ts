@@ -160,7 +160,6 @@ export class AllTriplogsComponent implements OnInit{
     this.triplogsApiService.getTripLogs().subscribe(data => {
       this.sortTriplogs(data);
       error => console.log(error);
-      this.getTriplogs();
     })
   }
 
