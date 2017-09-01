@@ -1,14 +1,15 @@
 <div class="container row">
-  <div class="col l5 m12 s12">
+  <div class="col l3 m12 s12">
     <div class="row">
       <app-add-triplog [lastTriplog]='latestTriplog'></app-add-triplog>
     </div>
   </div>
-  <div class="col l6 m12 s12 offset-l1 table">
+  <div class="col l8 m12 s12 offset-l1 table">
     <table class="agenda">
       <thead>
        <tr>
         <th>Date</th>
+        <th>Time</th>
         <th>Miles</th>
         <th>Mode</th>
         <th>Remove</th>
@@ -18,7 +19,8 @@
       </thead>
     <tbody [class]="setBackground(i)" *ngFor="let triplog of triplogs; let i = index">
       <tr *ngFor="let segment of triplogs[i].segments; let tripNumber = index;">
-        <td>{{segment.dateTime | date}}</td>
+        <td>{{triplog.date | date}}</td>
+        <td>{{segment.dateTime | date:'shortTime'}}</td>
         <td>{{segment.miles}}</td>
         <td>{{segment.mode}}</td>
         <td><a [class]="checkDelete(i)" (click)="verifyDeletion(i, tripNumber)"><i class="material-icons">delete</i></a></td>

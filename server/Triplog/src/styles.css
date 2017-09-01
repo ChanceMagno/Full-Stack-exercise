@@ -1,7 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-  background-image: url("https://i.stack.imgur.com/tc68A.jpg");
+  background-image: url("http://www.adviceinteractivegroup.com/images/Google-Maps-restaurants-in-Dallas.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+}
+
+.preLoader {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }

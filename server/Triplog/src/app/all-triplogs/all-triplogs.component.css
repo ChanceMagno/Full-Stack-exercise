@@ -13,6 +13,7 @@
 
 thead {
   margin:  !important 50px;
+  background-color: black;
 }
 
 .gray {
@@ -26,10 +27,13 @@ thead {
 .btn   {
 color: black;
 margin: 15px;
+
 }
 
 .hidden{
   visibility: hidden;
 }
 
-.modal { width: 75% !important ; max-height: 100% !important }
+.modal {
+   width: 75% !important ; max-height: 100% !important
+ }

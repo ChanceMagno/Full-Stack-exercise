@@ -1,0 +1,6 @@
+.signInButton {
+  position: absolute; /* or absolute */
+  top: 50%;
+  left: 35%;
+  width: 30%;
+}
