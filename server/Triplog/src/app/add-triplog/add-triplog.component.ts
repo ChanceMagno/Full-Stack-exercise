@@ -35,11 +35,15 @@ export class AddTriplogComponent implements OnInit {
   }
 
   validateForm(){
-    var {mode, miles} = this.newTriplogForm.value;
-    if(miles === null && mode === "Telework" || miles !== null && mode !== "" || miles < 0 && mode === "Telework"){
-      return "waves-effect waves-light btn green right-align"
-    }  else {
-      return "waves-effect waves-light btn green right-align disabled"
+    var {mode, miles, time} = this.newTriplogForm.value;
+    if(time === ""){
+      return "disabled waves-effect waves-light btn green"
+    } else {
+      if(miles === null && mode === "Telework" || miles !== null && mode !== "" || miles < 0 && mode === "Telework"){
+        return "waves-effect waves-light btn green right-align"
+      }  else {
+        return "waves-effect waves-light btn green right-align disabled"
+      }
     }
   }
 
