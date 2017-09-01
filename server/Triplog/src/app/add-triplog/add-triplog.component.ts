@@ -22,7 +22,6 @@ export class AddTriplogComponent implements OnInit {
 
   ngOnInit() {
     this.instantiateForm();
-    console.log(this.currentDate)
   }
 
   instantiateForm(){
@@ -44,7 +43,6 @@ export class AddTriplogComponent implements OnInit {
   }
 
   checkSaveOrUpdate(){
-    console.log(this.lastTriplog)
     if(this.lastTriplog === undefined || this.lastTriplog.segments[0].mode === ""){
       this.createNewTriplog();
     } else {
@@ -63,7 +61,6 @@ export class AddTriplogComponent implements OnInit {
     };
     this.lastTriplog.segments.push(triplogToUpdate)
     this.triplogsApiService.updateTriplog(this.lastTriplog, this.lastTriplog._id).subscribe(data => {
-      console.log("updated");
       error => console.log(error);
     })
   }
@@ -72,7 +69,6 @@ export class AddTriplogComponent implements OnInit {
     var currentDate = this.currentDate;
     var {mode, miles} = this.newTriplogForm.value;
     mode = mode.toLowerCase();
-    console.log('saving')
     let data: any =  {
       date: this.currentDate,
       updated: this.currentDate,

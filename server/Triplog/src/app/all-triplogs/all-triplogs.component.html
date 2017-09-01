@@ -4,7 +4,7 @@
       <app-add-triplog [lastTriplog]='latestTriplog'></app-add-triplog>
     </div>
   </div>
-  <div class="col l6 m12 s12 offset-l1 ">
+  <div class="col l6 m12 s12 offset-l1 table">
     <table class="centered agenda">
       <thead>
        <tr>
@@ -21,9 +21,9 @@
         <td>{{segment.dateTime | date}}</td>
         <td>{{segment.miles}}</td>
         <td>{{segment.mode}}</td>
-        <td><a [class]="checkDelete(i)" class="btn-floating btn-small waves-effect waves-light red" (click)="verifyDeletion(i, tripNumber)"><i class="material-icons">delete</i></a></td>
-        <td><a [class]="checkEdit(i)"><i class="material-icons">edit</i></a></td>
-        <td><a class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons">info</i></a></td>
+        <td><a [class]="checkDelete(i)" (click)="verifyDeletion(i, tripNumber)"><i class="material-icons">delete</i></a></td>
+        <td><a [class]="checkEdit(i)" (click)="openEdit(i, tripNumber)"><i class="material-icons">edit</i></a></td>
+        <td><a [class]="checkInfo(i)"><i class="material-icons">comment</i></a></td>
       </tr>
     </tbody>
   </table>

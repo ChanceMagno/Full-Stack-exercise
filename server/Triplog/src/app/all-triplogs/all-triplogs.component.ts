@@ -38,6 +38,17 @@ export class AllTriplogsComponent implements OnInit{
     this.getTriplogs();
   }
 
+  // callOtherDomain(){
+
+  //   var invocation = new XMLHttpRequest();
+  //   var url = 'http://bar.other/resources/public-data';
+  //   if(invocation){
+  //     invocation.open('GET', url, true);
+  //     invocation.onreadystatechange = this.handler;
+  //     invocation.send();
+  //   }
+  // }
+
   checkToken(){
     if(!this.triplogsApiService.checkToken()){
         this.router.navigate(['/']);
@@ -51,7 +62,19 @@ export class AllTriplogsComponent implements OnInit{
   setBackground(position: number){
     if(position % 2 === 0){
       return "gray centered";
+    } else {
+      return "white"
     }
+  }
+
+  checkInfo(index: number){
+    if(this.triplogs[index].segments[0].mode === ""){
+      return "disabled btn-floating btn-small waves-effect waves-light green";
+    } else {return "btn-floating btn-small waves-effect waves-light green"}
+  }
+
+  openEdit(triplogToUpdate: number, segmentToUpdate: number){
+
   }
 
   checkDelete(index: number){
@@ -93,25 +116,8 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   deleteTriplog(){
-  var test =  {
-        _id: "59a881503b5bd1ea9734e72c",
-        date: "2017-01-09T08:00:00.000Z",
-        __v: 0,
-        updated: "2017-08-31T21:36:16.896Z",
-        created: "2017-08-31T21:36:16.887Z",
-        segments: [
-            {
-                mode: "bike",
-                miles: 3,
-                dateTime: "2017-01-09T16:00:00.000Z",
-                _id: "59a881503b5bd1ea9734e72e"
-            },
-        ]
-    };
-    console.log('delete called');
-    this.triplogsApiService.deleteTripLog("59a881503b5bd1ea9734e732")
-    .subscribe(data => {
-      console.log("deleted?")
+    this.triplogsApiService.deleteTripLog(this.triplogs[this.triplogIndex]._id).subscribe(data => {
+      console.log("delete working")
     });
   }
 

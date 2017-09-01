@@ -41,16 +41,15 @@ export class TriplogsApiService {
   }
 
   deleteTripLog(id : string){
-    console.log(this.triplogsUrl + '/' + id)
-    return this.http.delete(this.triplogsUrl + '/' + id).map(res => res.json());
+    return this.http.delete(this.triplogsUrl + '/' + id, this.options).map(res => res);
   }
 
   createTripLog(data: any){
     return this.http.post(this.triplogsUrl, data, this.options).map(res => res.json());
   }
+
   updateTriplog(data: any, id){
-    console.log(typeof data)
-    return this.http.put(this.triplogsUrl + '/' + id, data)
+    return this.http.put(this.triplogsUrl + '/' + id, data, this.options)
     .map( res => res.json());
   }
 }

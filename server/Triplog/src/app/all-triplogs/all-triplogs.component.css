@@ -7,9 +7,8 @@
   margin-top:  80px;
 }
 
-.agenda {
-  background: white;
-  padding-bottom: 15px;
+.white{
+  background-color: white;
 }
 
 thead {
@@ -27,4 +26,8 @@ thead {
 .btn   {
 color: black;
 margin: 15px;
+}
+
+.hidden{
+  visibility: hidden;
 }
