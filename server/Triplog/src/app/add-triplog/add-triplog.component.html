@@ -6,6 +6,12 @@
   <form class="newTriplogForm"  method="post" [formGroup]="newTriplogForm">
     <div class="row">
       <div class="input-field col s12">
+        <input id="time" type="text" formControlName="time" materialize="pickatime">
+        <label class="active" for="time">Time</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
         <input id="miles" type="number" class="validate invalid" formControlName="miles">
         <label for="miles">Miles</label>
       </div>

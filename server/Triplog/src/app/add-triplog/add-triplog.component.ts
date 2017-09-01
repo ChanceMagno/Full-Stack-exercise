@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MaterializeModule } from "angular2-materialize";
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
+import * as moment from 'moment'
+
 
 @Component({
   selector: 'app-add-triplog',
@@ -27,7 +29,8 @@ export class AddTriplogComponent implements OnInit {
   instantiateForm(){
     this.newTriplogForm = this.formBuilder.group({
       mode: ['', Validators.required],
-      miles: ['', Validators.required]
+      miles: ['', Validators.required],
+      time: ["", Validators.required]
     })
   }
 
@@ -41,6 +44,7 @@ export class AddTriplogComponent implements OnInit {
   }
 
   checkSaveOrUpdate(){
+    var {mode, miles, time} = this.newTriplogForm.value;
     if(this.lastTriplog === undefined || this.lastTriplog.segments[0].mode === ""){
       this.createNewTriplog();
     } else {

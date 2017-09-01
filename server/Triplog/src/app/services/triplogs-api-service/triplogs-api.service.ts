@@ -27,9 +27,12 @@ export class TriplogsApiService {
   getAuthToken(){
     this.http.get(this.authTokenUrl).map((res: Response) => res.json())
     .subscribe(data =>{
-      this.authToken = "Bearer " + data.token;
-      this.headers.append("authorization", this.authToken);
-      this.options = new RequestOptions({headers: this.headers});
+      if(this.authToken !== data.token){
+        console.log("token is same")
+        this.authToken = "Bearer " + data.token;
+        this.headers.append("authorization", this.authToken);
+        this.options = new RequestOptions({headers: this.headers});
+      } else {console.log("error")}
     });
   }
 

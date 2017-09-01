@@ -86,7 +86,7 @@ export class AllTriplogsComponent implements OnInit{
   instantiateForm(){
     this.editTriplogForm = this.formBuilder.group({
       mode: ['', Validators.required],
-      miles: ['', Validators.required]
+      miles: ['', Validators.required],
     })
   }
 
@@ -152,7 +152,7 @@ export class AllTriplogsComponent implements OnInit{
 
   deleteTriplog(){
     this.triplogsApiService.deleteTripLog(this.triplogs[this.triplogIndex]._id).subscribe(data => {
-      console.log("delete working")
+      this.getTriplogs();
     });
   }
 
@@ -160,6 +160,7 @@ export class AllTriplogsComponent implements OnInit{
     this.triplogsApiService.getTripLogs().subscribe(data => {
       this.sortTriplogs(data);
       error => console.log(error);
+      this.getTriplogs();
     })
   }
 
