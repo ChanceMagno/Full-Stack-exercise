@@ -5,10 +5,10 @@
     </div>
   </div>
   <div class="col l6 m12 s12 offset-l1 table">
-    <table class="centered agenda">
+    <table class="agenda">
       <thead>
        <tr>
-        <th>Time</th>
+        <th>Date</th>
         <th>Miles</th>
         <th>Mode</th>
         <th>Remove</th>
@@ -38,4 +38,28 @@
     </div>
    </div>
  </div>
+ <div id="editModal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="editAction">
+  <div class="modal-content">
+    <h4 class="center-align">Update your log</h4>
+      <form class="editTriplogForm"  method="post" [formGroup]="editTriplogForm">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="miles" type="number" [value]="0" class="active validate" formControlName="miles">
+            <label class="active" for="miles">Miles</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col-s12">
+            <select class="label" materialize="material_select" [materializeSelectOptions]="type" formControlName="mode">
+              <option *ngFor="let tripmode of tripModes" [value]="tripmode">{{tripmode}}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <div class="row modalButtons">
+        <a (click)="cancelEdit()" class="waves-effect waves-light btn yellow">Cancel</a>
+        <a (click)="completeEdit()" class="waves-effect waves-light btn green">Update</a>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,13 +1,11 @@
 import { Component, OnInit, EventEmitter, Input } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
 import { DatePipe } from '@angular/common';
 import { DayLimitPipe } from '../day-limit.pipe'
 import { Router } from '@angular/router';
 import * as moment from 'moment'
 import { MaterializeAction } from 'angular2-materialize';
-
-
-
 
 
 @Component({
@@ -23,36 +21,41 @@ export class AllTriplogsComponent implements OnInit{
   private data: any = [];
   private testDate = new Date();
   private triplogsToDisplay: number = 30;
-  Materialize:any;
   private warnAction = new EventEmitter;
+  private editAction = new EventEmitter;
   private triplogIndex: number;
   private segmentIndex: number;
-  latestTriplog: any;
+  private latestTriplog: any;
+  private editTriplogForm: FormGroup;
+  private Materialize: any;
+  private tripModes: string[] = ["Bike", "Walk", "Carpool", "Drove Alone", "Vanpool", "Telework", "Transit"];
+  private preSelectedMode: string = '';
 
-  constructor(private triplogsApiService: TriplogsApiService, private router: Router) {}
+
+  constructor(private triplogsApiService: TriplogsApiService, private router: Router, private formBuilder: FormBuilder) {}
 
 
 
   ngOnInit() {
+    this.instantiateForm();
+    if(!this.triplogsApiService.checkToken()){
+        this.router.navigate(['/']);
+    }
     this.date.setDate(this.date.getDate());
     this.getTriplogs();
   }
-
-  // callOtherDomain(){
-
-  //   var invocation = new XMLHttpRequest();
-  //   var url = 'http://bar.other/resources/public-data';
-  //   if(invocation){
-  //     invocation.open('GET', url, true);
-  //     invocation.onreadystatechange = this.handler;
-  //     invocation.send();
-  //   }
-  // }
 
   checkToken(){
     if(!this.triplogsApiService.checkToken()){
         this.router.navigate(['/']);
     }
+  }
+
+  setFormValues(){
+    this.preSelectedMode = this.triplogs[this.triplogIndex].segments[this.segmentIndex].mode;
+    this.preSelectedMode = this.preSelectedMode.charAt(0).toUpperCase() + this.preSelectedMode.slice(1);
+    this.editTriplogForm.controls['mode'].setValue(this.preSelectedMode);
+    this.editTriplogForm.controls['miles'].setValue(this.triplogs[this.triplogIndex].segments[this.segmentIndex].miles)
   }
 
   warnModal() {
@@ -74,7 +77,39 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   openEdit(triplogToUpdate: number, segmentToUpdate: number){
+      this.triplogIndex = triplogToUpdate;
+      this.segmentIndex = segmentToUpdate;
+      this.openEditModal();
+      this.setFormValues();
+  }
 
+  instantiateForm(){
+    this.editTriplogForm = this.formBuilder.group({
+      mode: ['', Validators.required],
+      miles: ['', Validators.required]
+    })
+  }
+
+  openEditModal(){
+    this.editAction.emit({action:"modal",params:['open']});
+  }
+
+  completeEdit(){
+    var {mode, miles} = this.editTriplogForm.value;
+    if(miles === null && mode === "Telework" || miles !== null){
+      this.formatTripLog(mode, miles);
+    }
+  }
+
+  formatTripLog(mode: string, miles: number){
+    mode = mode.toLowerCase();
+    this.triplogs[this.triplogIndex].segments[this.segmentIndex].mode = mode;
+    this.triplogs[this.triplogIndex].segments[this.segmentIndex].miles = miles;
+    this.updateTriplog(this.triplogs[this.triplogIndex])
+  }
+
+  cancelEdit(){
+    this.editAction.emit({action:"modal",params:['close']});
   }
 
   checkDelete(index: number){
@@ -135,8 +170,10 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   updateTriplog(triplogToUpdate: any){
+    console.log(triplogToUpdate);
     this.triplogsApiService.updateTriplog(triplogToUpdate, triplogToUpdate._id).subscribe(data => {
       this.getTriplogs();
+      this.cancelEdit();
       error => console.log(error);
     })
   }

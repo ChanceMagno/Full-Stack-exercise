@@ -24,8 +24,6 @@ export class TriplogsApiService {
     } else return true;
   }
 
-
-
   getAuthToken(){
     this.http.get(this.authTokenUrl).map((res: Response) => res.json())
     .subscribe(data =>{
