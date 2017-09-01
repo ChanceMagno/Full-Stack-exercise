@@ -237,10 +237,8 @@ app.post('/api/triplogs',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.put('/api/triplogs/:id',secureMiddleware,function(req,res){
-  console.log("here")
   TriplogModel.findByIdAndUpdate(req.params.id,req.body,{runValidators:true},function(err,foundTriplog){
     if(err){
-      console.log("getting error here")
       return res.status(400).send(err);
     }
     res.status(204).send();
