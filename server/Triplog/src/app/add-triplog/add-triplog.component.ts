@@ -33,11 +33,10 @@ export class AddTriplogComponent implements OnInit {
 
   validateForm(){
     var {mode, miles} = this.newTriplogForm.value;
-    if(miles !== "" && mode !== "") {
+    console.log(mode, miles, typeof miles, typeof mode)
+    if(miles === null && mode === "Telework" || miles !== null && mode !== "" || miles < 0 && mode === "Telework"){
       return "waves-effect waves-light btn green right-align"
-    } else if (miles === "" && mode === "Telework"){
-      return "waves-effect waves-light btn green right-align"
-    } else {
+    }  else {
       return "waves-effect waves-light btn green right-align disabled"
     }
   }
