@@ -237,8 +237,10 @@ app.post('/api/triplogs',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.put('/api/triplogs/:id',secureMiddleware,function(req,res){
+  console.log("here")
   TriplogModel.findByIdAndUpdate(req.params.id,req.body,{runValidators:true},function(err,foundTriplog){
     if(err){
+      console.log("getting error here")
       return res.status(400).send(err);
     }
     res.status(204).send();
@@ -258,7 +260,7 @@ app.put('/api/triplogs/:id',secureMiddleware,function(req,res){
  * @apiUse Authorization
  */
 app.delete('/api/triplogs/:id',secureMiddleware,function(req,res){
-  TriplogModel.findByIdAndRemove(req.params.todoId,function(err, todo){
+  TriplogModel.findByIdAndRemove(req.params.id,function(err, todo){
     if(err){
       return res.status(400).send(err);
     }

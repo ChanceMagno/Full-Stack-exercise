@@ -44,10 +44,6 @@ export class AllTriplogsComponent implements OnInit{
     }
   }
 
-  getLatestTriplog(){
-  return  this.latestTriplog = this.triplogs[0];
-  }
-
   warnModal() {
   this.warnAction.emit({action:"modal",params:['open']});
   }
@@ -97,8 +93,26 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   deleteTriplog(){
+  var test =  {
+        _id: "59a881503b5bd1ea9734e72c",
+        date: "2017-01-09T08:00:00.000Z",
+        __v: 0,
+        updated: "2017-08-31T21:36:16.896Z",
+        created: "2017-08-31T21:36:16.887Z",
+        segments: [
+            {
+                mode: "bike",
+                miles: 3,
+                dateTime: "2017-01-09T16:00:00.000Z",
+                _id: "59a881503b5bd1ea9734e72e"
+            },
+        ]
+    };
     console.log('delete called');
-    this.triplogsApiService.deleteTripLog(this.triplogs[this.triplogIndex]._id);
+    this.triplogsApiService.deleteTripLog("59a881503b5bd1ea9734e732")
+    .subscribe(data => {
+      console.log("deleted?")
+    });
   }
 
   getTriplogs() {
@@ -134,6 +148,7 @@ export class AllTriplogsComponent implements OnInit{
     var dateToCheck = moment();
     var length = Object.keys(this.triplogs).length;
     for(var i = 0; i < this.triplogsToDisplay; i++){
+      this.latestTriplog = this.triplogs[0];
       if(this.triplogs[i] === undefined){
         { this.triplogs.splice(p, 1, this.getEmptyTriplog(i))}
       }
@@ -145,9 +160,6 @@ export class AllTriplogsComponent implements OnInit{
          if (triplogDate.isBefore(moment().subtract(this.triplogsToDisplay, 'days'))){
             this.triplogs.splice(p, 1);
         }
-      }
-      if(i === 30){
-        this.latestTriplog = this.triplogs[0];
       }
     }
   }

@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MaterializeModule } from "angular2-materialize";
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
-// import * as moment from 'moment'
 
 @Component({
   selector: 'app-add-triplog',
@@ -20,7 +19,6 @@ export class AddTriplogComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder, private triplogsApiService: TriplogsApiService) { }
-
 
   ngOnInit() {
     this.instantiateForm();
@@ -55,7 +53,19 @@ export class AddTriplogComponent implements OnInit {
   }
 
   updateTriplog(){
-
+    var currentDate = this.currentDate;
+    var {mode, miles} = this.newTriplogForm.value;
+    mode = mode.toLowerCase();
+    var triplogToUpdate = {
+      mode: mode,
+      miles: miles,
+      dateTime: this.currentDate,
+    };
+    this.lastTriplog.segments.push(triplogToUpdate)
+    this.triplogsApiService.updateTriplog(this.lastTriplog, this.lastTriplog._id).subscribe(data => {
+      console.log("updated");
+      error => console.log(error);
+    })
   }
 
   createNewTriplog(){

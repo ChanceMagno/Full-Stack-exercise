@@ -41,9 +41,8 @@ export class TriplogsApiService {
   }
 
   deleteTripLog(id : string){
-    return this.http.delete(this.triplogsUrl + '/' + id).map((res: Response) => res.text()).subscribe(data =>{
-      this.data = data;
-    });
+    console.log(this.triplogsUrl + '/' + id)
+    return this.http.delete(this.triplogsUrl + '/' + id).map(res => res.json());
   }
 
   createTripLog(data: any){
