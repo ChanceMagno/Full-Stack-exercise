@@ -30,19 +30,17 @@ export class AddTriplogComponent implements OnInit {
     this.newTriplogForm = this.formBuilder.group({
       mode: ['', Validators.required],
       miles: ['', Validators.required],
-      time: ["", Validators.required]
+      time: ['', Validators.required]
     })
   }
 
   validateForm(){
-    // var {mode, miles} = this.newTriplogForm.value;
-    // if(miles === null && mode === "Telework" || miles !== null && mode !== "" || miles < 0 && mode === "Telework"){
-    //   return "waves-effect waves-light btn green right-align"
-    // }  else {
-    //   return "waves-effect waves-light btn green right-align disabled"
-    // }
-    return "waves-effect waves-light btn green right-align"
-
+    var {mode, miles} = this.newTriplogForm.value;
+    if(miles === null && mode === "Telework" || miles !== null && mode !== "" || miles < 0 && mode === "Telework"){
+      return "waves-effect waves-light btn green right-align"
+    }  else {
+      return "waves-effect waves-light btn green right-align disabled"
+    }
   }
 
   checkSaveOrUpdate(){
@@ -80,7 +78,8 @@ export class AddTriplogComponent implements OnInit {
 
   createNewTriplog(){
     var currentDate = this.currentDate;
-    var {mode, miles} = this.newTriplogForm.value;
+    var {mode, miles, time} = this.newTriplogForm.value;
+    var dateTime = this.setDateTime(time);
     mode = mode.toLowerCase();
     let data: any =  {
       date: this.currentDate,
@@ -90,7 +89,7 @@ export class AddTriplogComponent implements OnInit {
           {
             mode: mode,
             miles: miles,
-            dateTime: this.currentDate,
+            dateTime: dateTime,
           }
       ]
     }

@@ -31,3 +31,5 @@ margin: 15px;
 .hidden{
   visibility: hidden;
 }
+
+.modal { width: 75% !important ; max-height: 100% !important }

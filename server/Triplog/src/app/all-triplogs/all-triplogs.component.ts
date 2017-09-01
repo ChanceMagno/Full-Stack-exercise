@@ -54,8 +54,10 @@ export class AllTriplogsComponent implements OnInit{
   setFormValues(){
     this.preSelectedMode = this.triplogs[this.triplogIndex].segments[this.segmentIndex].mode;
     this.preSelectedMode = this.preSelectedMode.charAt(0).toUpperCase() + this.preSelectedMode.slice(1);
+    var time = moment(this.triplogs[this.triplogIndex].segments[this.segmentIndex].dateTime).format('hh:mm: a');
     this.editTriplogForm.controls['mode'].setValue(this.preSelectedMode);
     this.editTriplogForm.controls['miles'].setValue(this.triplogs[this.triplogIndex].segments[this.segmentIndex].miles)
+    this.editTriplogForm.controls['time'].setValue(time)
   }
 
   warnModal() {
@@ -87,6 +89,7 @@ export class AllTriplogsComponent implements OnInit{
     this.editTriplogForm = this.formBuilder.group({
       mode: ['', Validators.required],
       miles: ['', Validators.required],
+      time: [' ', Validators.required]
     })
   }
 
@@ -95,16 +98,26 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   completeEdit(){
-    var {mode, miles} = this.editTriplogForm.value;
+    var {mode, miles, time} = this.editTriplogForm.value;
     if(miles === null && mode === "Telework" || miles !== null){
-      this.formatTripLog(mode, miles);
+      this.formatTripLog(mode, miles, time);
     }
   }
 
-  formatTripLog(mode: string, miles: number){
+  setDateTime(time: string) {
+    var setTime = moment(time, ["h:mm A"]).format("HH:mm:ss");
+    var date = moment().format('MM/DD/YYYY');
+    var dateTime = moment(date + ' ' + setTime, 'MM/DD/YYYY HH:mm:ss');
+     return dateTime;
+   }
+
+  formatTripLog(mode: string, miles: number, dateTime: any){
     mode = mode.toLowerCase();
+    dateTime = this.setDateTime(dateTime);
+    this.triplogs[this.triplogIndex].updated = this.date;
     this.triplogs[this.triplogIndex].segments[this.segmentIndex].mode = mode;
     this.triplogs[this.triplogIndex].segments[this.segmentIndex].miles = miles;
+    this.triplogs[this.triplogIndex].segments[this.segmentIndex].dateTime = dateTime;
     this.updateTriplog(this.triplogs[this.triplogIndex])
   }
 
@@ -122,6 +135,18 @@ export class AllTriplogsComponent implements OnInit{
     if(this.triplogs[index].segments[0].mode === ""){
       return "disabled btn-floating btn-small waves-effect waves-light blue";
     } else {return "btn-floating btn-small waves-effect waves-light blue"}
+  }
+
+  validate(){
+    var {mode, miles, time} = this.editTriplogForm.value;
+    if(time === ""){
+      return "disabled waves-effect waves-light btn green"
+    } else {
+      if(miles === null && mode === "Telework" || miles !== null && mode !== "" || miles < 0 && mode === "Telework"){
+        return "waves-effect waves-light btn green "
+      }  else {
+        return "disabled waves-effect waves-light btn green"
+      }}
   }
 
   verifyDeletion(triplogIndex: number, segmentIndex: number){
@@ -170,7 +195,7 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   updateTriplog(triplogToUpdate: any){
-    console.log(triplogToUpdate);
+    triplogToUpdate.updated = new Date();
     this.triplogsApiService.updateTriplog(triplogToUpdate, triplogToUpdate._id).subscribe(data => {
       this.getTriplogs();
       this.cancelEdit();
