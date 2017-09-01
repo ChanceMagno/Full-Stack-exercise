@@ -12,8 +12,9 @@
 }
 
 thead {
+  color: #f0c441;
+  font-size: 125%;
   margin:  !important 50px;
-  background-color: black;
 }
 
 .gray {
