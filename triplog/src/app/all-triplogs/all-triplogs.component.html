@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="col l8 m12 s12 offset-l1 table">
-    <table class="agenda">
+    <table class="agenda bordered">
       <thead>
        <tr>
         <th>Date</th>
@@ -14,7 +14,7 @@
         <th>Mode</th>
         <th>Remove</th>
         <th>Edit</th>
-        <th>Suggestions<th>
+        <th>Suggestions</th>
        </tr>
       </thead>
     <tbody [class]="setBackground(i)" *ngFor="let triplog of triplogs; let i = index">

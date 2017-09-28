@@ -11,6 +11,11 @@
   background-color: white;
 }
 
+table.agenda.bordered {
+  background-color: #545454;
+  border-radius: 25px;
+}
+
 thead {
   color: #f0c441;
   font-size: 125%;

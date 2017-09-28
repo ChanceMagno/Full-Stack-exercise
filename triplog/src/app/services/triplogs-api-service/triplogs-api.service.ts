@@ -11,7 +11,7 @@ export class TriplogsApiService {
   private triplogsUrl = this.baseUrl + 'triplogs';
   private data: any = {};
   private headers = new Headers();
-  private authToken = '';
+  private authToken: string;
   private options;
 
 
@@ -27,16 +27,15 @@ export class TriplogsApiService {
   getAuthToken(){
     this.http.get(this.authTokenUrl).map((res: Response) => res.json())
     .subscribe(data =>{
-      if(this.authToken !== data.token){
-        console.log("token is same")
+        this.headers = new Headers();
         this.authToken = "Bearer " + data.token;
         this.headers.append("authorization", this.authToken);
         this.options = new RequestOptions({headers: this.headers});
-      } else {console.log("error")}
     });
   }
 
   getTripLogs(){
+    console.log(this.options);
     return this.http.get(this.triplogsUrl, this.options)
    .map(res => res.json());
   }

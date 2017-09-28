@@ -67,7 +67,7 @@ export class AllTriplogsComponent implements OnInit{
 
   setBackground(position: number){
     if(position % 2 === 0){
-      return "gray centered";
+      return "gray";
     } else {
       return "white"
     }
@@ -183,14 +183,12 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   getTriplogs() {
-    if(!this.triplogsApiService.checkToken()){
-        this.router.navigate(['/']);
-    } else {
       this.triplogsApiService.getTripLogs().subscribe(data => {
-        this.sortTriplogs(data);
-        error => console.log(error);
+          this.sortTriplogs(data);
+        err => {
+            console.log(err);
+          }
       })
-    }
 
   }
 
@@ -205,7 +203,11 @@ export class AllTriplogsComponent implements OnInit{
     this.triplogsApiService.updateTriplog(triplogToUpdate, triplogToUpdate._id).subscribe(data => {
       this.getTriplogs();
       this.cancelEdit();
-      error => console.log(error);
+      error => {
+        if(!this.triplogsApiService.checkToken){
+          this.router.navigate(['/']);
+          console.log(error);}
+        }
     })
   }
 
@@ -213,7 +215,7 @@ export class AllTriplogsComponent implements OnInit{
     let date = new Date();
     date.setDate(date.getDate() - day);
     return this.emptyTriplog = {date: date, updated: "", created: "",
-        segments: [{ mode: "", miles: 0, dateTime: date,}]
+        segments: [{ mode: "", miles: '', dateTime: '',}]
       };
   }
 
@@ -221,8 +223,8 @@ export class AllTriplogsComponent implements OnInit{
     var triplogDate;
     var dateToCheck = moment();
     var length = Object.keys(this.triplogs).length;
+    this.latestTriplog = this.triplogs[0];    
     for(var i = 0; i < this.triplogsToDisplay; i++){
-      this.latestTriplog = this.triplogs[0];
       if(this.triplogs[i] === undefined){
         { this.triplogs.splice(p, 1, this.getEmptyTriplog(i))}
       }
