@@ -28,7 +28,7 @@ export class AllTriplogsComponent implements OnInit{
   private latestTriplog: any;
   private editTriplogForm: FormGroup;
   private Materialize: any;
-  private tripModes: string[] = ["Bike", "Walk", "Carpool", "Drove Alone", "Vanpool", "Telework", "Transit"];
+  private tripModes: string[] = ["Bike", "Walk", "Carpool", "Drive", "Vanpool", "Telework", "Transit"];
   private preSelectedMode: string = '';
 
 
@@ -213,6 +213,7 @@ export class AllTriplogsComponent implements OnInit{
 
   getEmptyTriplog(day: number){
     let date = new Date();
+    console.log(this.triplogs);
     date.setDate(date.getDate() - day);
     return this.emptyTriplog = {date: date, updated: "", created: "",
         segments: [{ mode: "", miles: '', dateTime: '',}]
@@ -239,6 +240,7 @@ export class AllTriplogsComponent implements OnInit{
       }
     }
   }
+
 
   sortTriplogs(data: any){
     this.data = data;

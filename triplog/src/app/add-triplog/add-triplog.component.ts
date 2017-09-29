@@ -12,7 +12,7 @@ import * as moment from 'moment'
 })
 export class AddTriplogComponent implements OnInit {
   private newTriplogForm: FormGroup;
-  private tripModes: string[] = ["Bike", "Walk", "Carpool", "Drove Alone", "Vanpool", "Telework", "Transit"];
+  private tripModes: string[] = ["Bike", "Walk", "Carpool", "Drive", "Vanpool", "Telework", "Transit"];
   private currentDate = new Date();
   private warning: string = "Please Fill Out All fields"
   private Materialize: any;
@@ -88,6 +88,7 @@ export class AddTriplogComponent implements OnInit {
     var {mode, miles, time} = this.newTriplogForm.value;
     var dateTime = this.setDateTime(time);
     mode = mode.toLowerCase();
+    console.log(mode);
     let data: any =  {
       date: this.currentDate,
       updated: this.currentDate,
