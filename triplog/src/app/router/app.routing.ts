@@ -1,7 +1,8 @@
-import { ModuleWithProviders }  from '@angular/core';
+import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
-import { AllTriplogsComponent } from '../all-triplogs/all-triplogs.component'
+import { AllTriplogsComponent } from '../all-triplogs/all-triplogs.component';
+import { ProfileComponent } from '../profile/profile.component';
 
 const appRoutes: Routes = [
 
@@ -12,6 +13,10 @@ const appRoutes: Routes = [
   {
     path: 'triplogs',
     component: AllTriplogsComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
 
 ];

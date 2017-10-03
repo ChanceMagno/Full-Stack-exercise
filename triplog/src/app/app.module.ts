@@ -11,6 +11,7 @@ import { DayLimitPipe } from './day-limit.pipe';
 import * as moment from 'moment'
 import { MaterializeModule } from 'angular2-materialize';
 import { AddTriplogComponent } from './add-triplog/add-triplog.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -24,6 +25,7 @@ import { AddTriplogComponent } from './add-triplog/add-triplog.component';
     AllTriplogsComponent,
     DayLimitPipe,
     AddTriplogComponent,
+    ProfileComponent,
   ],
   imports: [
     routing,
