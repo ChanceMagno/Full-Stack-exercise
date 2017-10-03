@@ -13,6 +13,8 @@ import { MaterializeModule } from 'angular2-materialize';
 import { AddTriplogComponent } from './add-triplog/add-triplog.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChartComponent } from './chart/chart.component';
+import { ChartsModule } from 'ng2-charts';
+
 
 
 
@@ -36,6 +38,7 @@ import { ChartComponent } from './chart/chart.component';
     HttpModule,
     MaterializeModule,
     ReactiveFormsModule,
+    ChartsModule
   ],
   providers: [TriplogsApiService],
   bootstrap: [AppComponent]
