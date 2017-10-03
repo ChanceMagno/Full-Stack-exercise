@@ -14,6 +14,7 @@ export class TriplogsApiService {
   private baseUrl = 'http://localhost:3000/api/';
   private authTokenUrl = this.baseUrl + 'token';
   private triplogsUrl = this.baseUrl + 'triplogs';
+  private triplogsStatsUrl = this.baseUrl + "/stats";
   private data: any = {};
   private headers = new Headers();
   private authToken: string;
@@ -44,9 +45,9 @@ export class TriplogsApiService {
    .map(res => res.json()).catch(this.handleError);
   }
 
-  handleError(error: Response){
-    console.log(error);
-    return Observable.throw(error || 'Server Error');
+  getTriplogsStats(){
+    return this.http.get(this.triplogsStatsUrl, this.options)
+    .map(res => res.json()).catch(this.handleError)
   }
 
   deleteTripLog(id : string){
@@ -60,5 +61,10 @@ export class TriplogsApiService {
   updateTriplog(data: any, id){
     return this.http.put(this.triplogsUrl + '/' + id, data, this.options)
     .map( res => res.json());
+  }
+
+  handleError(error: Response){
+    console.log(error);
+    return Observable.throw(error || 'Server Error');
   }
 }
