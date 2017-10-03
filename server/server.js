@@ -125,13 +125,56 @@ app.get('/api/triplog-modes',secureMiddleware,function(req,res){
 app.get('/api/triplogs',secureMiddleware,function(req,res){
   TriplogModel.find(function (err, Triplogs) {
     if (err) {
-        res.status(500).send(err)
+      return res.status(401).send(err)
     } else {
-      //may need to handle limit of triplogs here to 30 days
         res.send(Triplogs);
     }
   });
 })
+
+// app.get('/api/triplogs/sort', secureMiddleware, function(req, res){
+//   TriplogModel.find(function (err, Triplogs){
+//     if (err) {
+//       return res.status(401).send(err)
+//     } else {
+//         res.send(Triplogs);
+//     }
+//   }).sort({"date": -1}).limit(30)
+// })
+
+
+app.get('/api/triplogs/stats', secureMiddleware, function(req, res){
+  console.log("api called stats")
+  var  startOfWeek = 0;
+  TriplogModel.aggregate([
+    { 
+      $unwind: "$segments"
+    },
+    { $project : {
+      "bikeMiles" : {$cond : { if : { $eq: ["$segments.mode", "bike"]}, then: "$segments.miles", else : 0 }},
+      "segments" : 1, 
+      },
+    },
+      { $project : {
+        "bikeMiles" : 1,
+        "segments" : 1,
+        "dollarsSaved" : { $multiply : ["$bikeMiles", 0.20]}
+        }
+      }, 
+     { 
+       $group: 
+        { 
+         "_id": null,
+          totalMiles : {$sum: "$segments.miles"},
+          bikeMiles : { $sum: "$bikeMiles"}, 
+          dollarsSaved : { $sum: "$dollarsSaved"}
+        }
+    }
+  ], function(err, aggRes) {
+    return res.send(aggRes[0]);
+  })
+})
+
 
 /**
  * @api {post} /api/triplogs Create a triplog
@@ -265,7 +308,6 @@ app.delete('/api/triplogs/:id',secureMiddleware,function(req,res){
     res.send("Deleted Triplog with ID: "+req.params.id);
   });
 })
-
 
 app.listen(config.PORT, function () {
   console.log('Example app listening on port 3000!')

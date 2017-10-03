@@ -1,7 +1,8 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed,  } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { TriplogsApiService } from '../services/triplogs-api-service/triplogs-api.service';
 
 import { AllTriplogsComponent } from './all-triplogs.component';
 
@@ -11,7 +12,8 @@ describe('AllTriplogsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AllTriplogsComponent ]
+      declarations: [ AllTriplogsComponent ],
+      providers: [TriplogsApiService]
     })
     .compileComponents();
   }));
@@ -25,4 +27,5 @@ describe('AllTriplogsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

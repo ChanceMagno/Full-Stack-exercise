@@ -2,6 +2,7 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { TriplogsApiService } from './triplogs-api.service';
+import { MockBackend } from '@angular/http/testing';
 
 describe('TriplogsApiService', () => {
   beforeEach(() => {

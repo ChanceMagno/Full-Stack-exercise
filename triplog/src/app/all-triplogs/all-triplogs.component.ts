@@ -33,17 +33,19 @@ export class AllTriplogsComponent implements OnInit{
 
 
 
-  constructor(private triplogsApiService: TriplogsApiService, private router: Router, private formBuilder: FormBuilder) {}
+  constructor(private triplogsApiService: TriplogsApiService, private router: Router, private formBuilder: FormBuilder) {
+    this.instantiateForm();
+    if(!this.triplogsApiService.checkToken()){
+        this.router.navigate(['/']);
+    } 
+    this.date.setDate(this.date.getDate());
+    this.getTriplogs();
+  }
 
 
 
   ngOnInit() {
-    this.instantiateForm();
-    if(!this.triplogsApiService.checkToken()){
-        this.router.navigate(['/']);
-    }
-    this.date.setDate(this.date.getDate());
-    this.getTriplogs();
+
   }
 
   checkToken(){
@@ -168,7 +170,7 @@ export class AllTriplogsComponent implements OnInit{
 
   checkIfDeleteOrUpdate(){
     var segmentsLength = Object.keys(this.triplogs[this.triplogIndex].segments).length;
-    if(segmentsLength > 1){
+    if (segmentsLength > 1) {
         this.removeSegment();
     } else {
       this.deleteTriplog();
@@ -183,19 +185,22 @@ export class AllTriplogsComponent implements OnInit{
   }
 
   getTriplogs() {
-      this.triplogsApiService.getTripLogs().subscribe(data => {
-          this.sortTriplogs(data);
-        err => {
-            console.log(err);
-          }
-      })
-
+    this.triplogsApiService.getTripLogs()
+    .subscribe(data => this.sortTriplogs(data),
+        err => this.handleError(err)
+    );
   }
 
-  removeSegment(){
-    this.triplogs[this.triplogIndex].segments.splice(this.segmentIndex, 1)
-    let triplogToUpdate = this.triplogs[this.triplogIndex]
-    this.updateTriplog(triplogToUpdate)
+  handleError(error: any) {
+    if(error.status === 401) {
+      this.router.navigate(['/']);
+    }
+  }
+
+  removeSegment() {
+    this.triplogs[this.triplogIndex].segments.splice(this.segmentIndex, 1);
+    const triplogToUpdate = this.triplogs[this.triplogIndex]
+    this.updateTriplog(triplogToUpdate);
   }
 
   updateTriplog(triplogToUpdate: any){
@@ -204,7 +209,7 @@ export class AllTriplogsComponent implements OnInit{
       this.getTriplogs();
       this.cancelEdit();
       error => {
-        if(!this.triplogsApiService.checkToken){
+        if (!this.triplogsApiService.checkToken) {
           this.router.navigate(['/']);
           console.log(error);}
         }

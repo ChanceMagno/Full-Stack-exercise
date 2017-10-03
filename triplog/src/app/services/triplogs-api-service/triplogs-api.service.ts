@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
+
+
 
 
 @Injectable()
@@ -35,9 +40,13 @@ export class TriplogsApiService {
   }
 
   getTripLogs(){
-    console.log(this.options);
     return this.http.get(this.triplogsUrl, this.options)
-   .map(res => res.json());
+   .map(res => res.json()).catch(this.handleError);
+  }
+
+  handleError(error: Response){
+    console.log(error);
+    return Observable.throw(error || 'Server Error');
   }
 
   deleteTripLog(id : string){
