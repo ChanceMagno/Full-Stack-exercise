@@ -14,7 +14,7 @@ export class TriplogsApiService {
   private baseUrl = 'http://localhost:3000/api/';
   private authTokenUrl = this.baseUrl + 'token';
   private triplogsUrl = this.baseUrl + 'triplogs';
-  private triplogsStatsUrl = this.baseUrl + "/stats";
+  private triplogsStatsUrl = this.triplogsUrl + '/stats';
   private data: any = {};
   private headers = new Headers();
   private authToken: string;

@@ -1,0 +1,18 @@
+.container {
+    margin-top: 50px;
+}
+
+.card-content {
+    position: relative;
+    height: 350px;
+}
+
+.stats-info {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+}

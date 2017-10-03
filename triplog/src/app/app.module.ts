@@ -8,10 +8,11 @@ import { HomeComponent } from './home/home.component';
 import { routing } from './router/app.routing';
 import { AllTriplogsComponent } from './all-triplogs/all-triplogs.component';
 import { DayLimitPipe } from './day-limit.pipe';
-import * as moment from 'moment'
+import * as moment from 'moment';
 import { MaterializeModule } from 'angular2-materialize';
 import { AddTriplogComponent } from './add-triplog/add-triplog.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ChartComponent } from './chart/chart.component';
 
 
 
@@ -26,6 +27,7 @@ import { ProfileComponent } from './profile/profile.component';
     DayLimitPipe,
     AddTriplogComponent,
     ProfileComponent,
+    ChartComponent,
   ],
   imports: [
     routing,
