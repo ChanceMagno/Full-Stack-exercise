@@ -1,5 +1,5 @@
 .container {
-    margin-top: 50px;
+    margin-top: 80px;
 }
 
 .card-content {
@@ -15,4 +15,8 @@
     margin-right: -50%;
     transform: translate(-50%, -50%);
     font-size: 60px;
+}
+
+.card-header {
+    font-weight: bold;
 }

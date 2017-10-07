@@ -1,10 +1,9 @@
-<div class="container">
-  <div class="pie-chart">
-      <canvas baseChart width="250" height="250"
-      [data]="doughnutChartData"  [labels]="doughnutChartLabels"
-      [chartType]="doughnutChartType"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)">  
-      </canvas>   
-    </div>
+<div class="pie-chart">
+  <canvas baseChart width="250" height="250"
+  [data]="doughnutChartData"  [labels]="doughnutChartLabels"
+  [chartType]="doughnutChartType"
+  (chartHover)="chartHovered($event)"
+  (chartClick)="chartClicked($event)">  
+  </canvas>   
 </div>
+<div class="row bottom"></div>

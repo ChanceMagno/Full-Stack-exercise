@@ -4,8 +4,8 @@
       <div class="card horizontal">
         <div class="card-stacked">
           <div class="card-content">
-            <p class="center-align">Kilometers Travelled</p>
-            <p class="stats-info">{{totalKiloTravelled}}</p>
+            <p class="card-header center-align">Kilometers Travelled</p>
+            <p class="stats-info">{{totalKiloTraveed}}</p>
           </div>
         </div>
       </div>
@@ -14,7 +14,7 @@
       <div class="card horizontal">
         <div class="card-stacked">
           <div class="card-content">
-            <p class="center-align">Bike Kilometers Travelled</p>              
+            <p class=" card-header center-align">Bike Kilometers Travelled</p>              
             <p class="stats-info">{{bikeKiloTravelled}}</p>
           </div>
         </div>
@@ -24,12 +24,13 @@
       <div class="card horizontal">
         <div class="card-stacked">
           <div class="card-content">
-              <p class="center-align">Dollars Saved</p>              
-              <p class="stats-info">{{dollarsSaved}}</p>
+              <p class="card-header center-align">Dollars Saved</p>              
+              <p class="stats-info">{{dollarsSaved | currency:USD$:2 }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <app-chart></app-chart>
 

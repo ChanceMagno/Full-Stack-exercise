@@ -11,3 +11,9 @@ nav {
   height: 100px;
   margin-bottom: 25px;
 }
+
+a {
+  height: 100px;
+  padding-top: 10px;
+  margin-right: 5px;
+}
